@@ -1,0 +1,29 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "ichdet"
+version = "0.3.0"
+description = "Evaluation code for a controlled comparison of RetinaNet and YOLO for intracranial hemorrhage detection on head CT"
+requires-python = ">=3.10"
+license = {text = "AGPL-3.0-only"}
+authors = [
+    {name = "Guilherme Dantas Bispo", email = "guilherme.bispo@redes.unb.br"},
+    {name = "André Luiz Marques Serrano"},
+    {name = "Vinícius Pereira Gonçalves"},
+]
+dependencies = ["numpy>=1.24", "scipy>=1.10"]
+
+[project.urls]
+Repository = "https://github.com/guilhermebispo/ich-detection-benchmark"
+
+[project.optional-dependencies]
+test = ["pytest>=7", "pycocotools>=2.0.7", "pyyaml>=6"]
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src", "tests"]
