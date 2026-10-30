@@ -72,7 +72,9 @@ See [`DATA_LICENSES.md`](DATA_LICENSES.md) for the references and licence notice
 GNU Affero General Public License v3.0 ([`LICENSE`](LICENSE)). YOLO training and prediction use the
 Ultralytics library, which is distributed under the same licence.
 
-## Contact
+## Author and maintainer
 
-Guilherme Dantas Bispo, Department of Electrical Engineering, University of Brasília (UnB), Brazil
-(guilherme.bispo@redes.unb.br).
+The code and this repository are written and maintained by Guilherme Dantas Bispo, Department of
+Electrical Engineering, University of Brasília (UnB), Brazil (guilherme.bispo@redes.unb.br,
+ORCID [0000-0002-4938-2076](https://orcid.org/0000-0002-4938-2076)). The authors of the article are listed
+in the citation above.

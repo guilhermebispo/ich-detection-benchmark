@@ -35,7 +35,18 @@ YOLO_CHECKED = ("epochs", "batch", "nbs", "imgsz", "seed", "optimizer", "lr0", "
 
 
 def frozen_fingerprint(package_dir) -> str:
-    """SHA-256 (first 16 hex digits) over the frozen modules, in name order."""
+    """Fingerprint of the frozen modules, used to prove that a run used the registered code.
+
+    Args:
+        package_dir: Directory containing the `ichdet` modules.
+
+    Returns:
+        First 16 hexadecimal digits of the SHA-256 of each frozen module's name and contents, in the order
+        of `FROZEN_MODULES`.
+
+    Raises:
+        FileNotFoundError: If a frozen module is missing from `package_dir`.
+    """
     h = hashlib.sha256()
     for name in FROZEN_MODULES:
         h.update(name.encode())
@@ -44,17 +55,47 @@ def frozen_fingerprint(package_dir) -> str:
 
 
 def job_order(folds=FOLDS, arms=ARMS) -> list[tuple[int, str]]:
-    """Primary comparison first (RetinaNet and YOLO without mosaic, fold by fold), then the mosaic arm, so
-    that if compute runs out the primary analysis is complete."""
+    """Order in which the training jobs are run.
+
+    The jobs of the primary comparison (RetinaNet and YOLO without mosaic, fold by fold) come first and the
+    mosaic arm last, so that the primary analysis is complete if compute runs out.
+
+    Args:
+        folds: Fold numbers to include.
+        arms: Arm names to include (`"retinanet"`, `"yolo_no_mosaic"`, `"yolo_mosaic"`).
+
+    Returns:
+        List of `(fold, arm)` pairs.
+    """
     first = [(f, a) for f in folds for a in arms if a in PRIMARY_ARMS]
     return first + [(f, a) for f in folds for a in arms if a not in PRIMARY_ARMS]
 
 
 def job_dir(out_root, fold: int, arm: str) -> Path:
+    """Output directory of one job.
+
+    Args:
+        out_root: Root directory of the experiment outputs.
+        fold: Held-out fold (1 to 5).
+        arm: Arm name.
+
+    Returns:
+        `out_root/fold<fold>/<arm>`.
+    """
     return Path(out_root) / f"fold{fold}" / arm
 
 
 def epochs_done(directory, arm: str) -> int:
+    """Number of training epochs already recorded for one job.
+
+    Args:
+        directory: Job directory (see `job_dir`).
+        arm: Arm name; RetinaNet epochs are read from `history.json`, YOLO epochs from the Ultralytics
+            `results.csv`.
+
+    Returns:
+        Number of completed epochs (0 if training has not started).
+    """
     d = Path(directory)
     if arm == "retinanet":
         f = d / "history.json"
@@ -64,7 +105,22 @@ def epochs_done(directory, arm: str) -> int:
 
 
 def seconds_per_epoch(directory, arm: str) -> float:
-    """Median training time per epoch (robust to the first epoch and to resumed sessions)."""
+    """Median training time per epoch of one job.
+
+    The first epoch is skipped (it includes data loading and warm-up), and the median is robust to the
+    longer epochs that follow a resumed session.
+
+    Args:
+        directory: Job directory (see `job_dir`).
+        arm: Arm name; for YOLO, per-epoch times are differences of the cumulative `time` column of
+            `results.csv`.
+
+    Returns:
+        Median seconds per epoch.
+
+    Raises:
+        FileNotFoundError: If the training log of the job does not exist.
+    """
     d = Path(directory)
     if arm == "retinanet":
         times = [h["seconds"] for h in json.loads((d / "history.json").read_text())]
@@ -75,7 +131,20 @@ def seconds_per_epoch(directory, arm: str) -> float:
 
 
 def check_yolo_args(run_dir, mosaic: bool, epochs: int, batch_size: int = cfg.BATCH_SIZE) -> dict:
-    """Compare the args.yaml saved by Ultralytics with the frozen settings; raise if anything differs."""
+    """Check the arguments recorded by Ultralytics for a YOLO job against the frozen settings.
+
+    Args:
+        run_dir: YOLO run directory containing the `args.yaml` written by Ultralytics.
+        mosaic: Whether the run belongs to the mosaic arm.
+        epochs: Expected number of epochs.
+        batch_size: Expected batch size.
+
+    Returns:
+        The checked settings and their expected values.
+
+    Raises:
+        ValueError: If any checked setting differs from the frozen value.
+    """
     import yaml
     from .yolo import train_arguments
 
@@ -89,7 +158,16 @@ def check_yolo_args(run_dir, mosaic: bool, epochs: int, batch_size: int = cfg.BA
 
 
 class JobLock:
-    """Lock file with a heartbeat thread. Another session may take the job once the heartbeat is stale."""
+    """Lock file with a heartbeat thread, shared by Colab sessions working on the same job list.
+
+    Another session may take the job once the heartbeat is older than `stale_after` seconds.
+
+    Args:
+        path: Path of the lock file (JSON with the session name and the time of the last heartbeat).
+        session: Name of the session that holds or requests the lock.
+        stale_after: Seconds without a heartbeat after which the lock is considered free.
+        beat: Seconds between heartbeats.
+    """
 
     def __init__(self, path, session: str, stale_after: float = STALE_SECONDS, beat: float = HEARTBEAT_SECONDS):
         self.path, self.session, self.stale_after, self.beat = Path(path), session, stale_after, beat
@@ -97,7 +175,12 @@ class JobLock:
         self._thread = None
 
     def holder(self):
-        """(session, seconds since its last heartbeat) of a live lock held by another session, else None."""
+        """Current holder of the lock, if it is another session with a recent heartbeat.
+
+        Returns:
+            `(session, seconds since its last heartbeat)` for a live lock held by another session, or
+            `None` if the lock is free, stale, unreadable or held by this session.
+        """
         if not self.path.exists():
             return None
         try:
@@ -117,6 +200,11 @@ class JobLock:
             self._write()
 
     def acquire(self) -> bool:
+        """Take the lock and start the heartbeat thread.
+
+        Returns:
+            `True` if the lock was taken, `False` if another session holds a live lock.
+        """
         if self.holder():
             return False
         self.path.parent.mkdir(parents=True, exist_ok=True)
@@ -126,6 +214,7 @@ class JobLock:
         return True
 
     def release(self):
+        """Stop the heartbeat thread and delete the lock file."""
         self._stop.set()
         if self._thread:
             self._thread.join()
@@ -133,7 +222,19 @@ class JobLock:
 
 
 def status(out_root, folds=FOLDS, arms=ARMS, session: str = "") -> list[dict]:
-    """State of every job: done, running (live lock of another session), partial (some epochs saved) or pending."""
+    """State of every job of the experiment.
+
+    Args:
+        out_root: Root directory of the experiment outputs.
+        folds: Fold numbers to include.
+        arms: Arm names to include.
+        session: Name of the calling session (its own locks do not count as "running").
+
+    Returns:
+        One dictionary per job, in `job_order`, with `fold`, `arm`, `epochs` and `state`: `"done"`
+        (`job.json` written), `"running"` (live lock of another session), `"partial"` (some epochs saved)
+        or `"pending"`.
+    """
     rows = []
     for fold, arm in job_order(folds, arms):
         d = job_dir(out_root, fold, arm)
@@ -149,7 +250,20 @@ def status(out_root, folds=FOLDS, arms=ARMS, session: str = "") -> list[dict]:
 
 
 def _train_and_predict(arm, training, validation, images_root, directory, epochs):
-    """Train with the frozen code and predict the held-out fold; returns (predictions, extra job info)."""
+    """Train one arm with the frozen code and predict its held-out fold.
+
+    Args:
+        arm: Arm name.
+        training: Training entries of the MONAI split file.
+        validation: Held-out entries of the MONAI split file.
+        images_root: Directory that the entries' image paths are relative to.
+        directory: Job directory.
+        epochs: Number of training epochs.
+
+    Returns:
+        `(predictions, info)`: predictions as `{image: (boxes (N, 4) as [x1, y1, x2, y2] in pixels,
+        scores (N,))}`, and extra job information (prediction time and, for YOLO, the checked arguments).
+    """
     if arm == "retinanet":
         from . import retinanet
         checkpoint = retinanet.train(training, images_root, directory, epochs=epochs)
@@ -167,11 +281,28 @@ def _train_and_predict(arm, training, validation, images_root, directory, epochs
 
 def run_job(fold: int, arm: str, split_json, images_root, out_root, epochs: int = cfg.EPOCHS,
             session: str = "", environment: dict | None = None, take_over: bool = False, log=print) -> str:
-    """Run one job to the end. Returns "done" (already finished), "locked" (another session has it) or
-    "finished" (finished now).
+    """Run one training job to the end: train, predict the held-out fold and write `job.json`.
 
-    take_over=True ignores another session's lock: for a single Colab session, whose own lock from before a
-    disconnection would otherwise block the job until the heartbeat goes stale.
+    Args:
+        fold: Held-out fold (1 to 5).
+        arm: Arm name.
+        split_json: MONAI split file of the fold (`training` and `validation` entries).
+        images_root: Directory that the entries' image paths are relative to.
+        out_root: Root directory of the experiment outputs.
+        epochs: Number of training epochs.
+        session: Name of the calling session.
+        environment: Software and hardware description recorded in `job.json`.
+        take_over: Ignore another session's lock. Meant for a single Colab session, whose own lock from
+            before a disconnection would otherwise block the job until its heartbeat goes stale.
+        log: Function used for progress messages.
+
+    Returns:
+        `"done"` if the job had already finished, `"locked"` if another session holds it, or `"finished"`
+        if it finished now.
+
+    Raises:
+        RuntimeError: If the number of recorded epochs differs from `epochs` after training.
+        ValueError: If a YOLO run's recorded arguments differ from the frozen settings.
     """
     from .data_io import save_predictions
 

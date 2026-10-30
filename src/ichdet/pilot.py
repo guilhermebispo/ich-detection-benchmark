@@ -16,10 +16,19 @@ ARMS = ("retinanet", "yolo_no_mosaic", "yolo_mosaic")
 
 
 def summarize(comparison: dict, seconds_per_epoch: dict, pilot_exams: int, margin: float = 0.05) -> dict:
-    """comparison: output of evaluate.compare_crossval on the pilot fold.
+    """Compute budget of the full experiment and projected precision of the primary analysis.
 
-    seconds_per_epoch: measured training time per epoch for "retinanet" and "yolo_no_mosaic"; the mosaic
-    arm is assumed to cost the same as the no-mosaic arm.
+    Args:
+        comparison: Output of `evaluate.compare_crossval` on the pilot fold.
+        seconds_per_epoch: Measured training seconds per epoch for `"retinanet"` and `"yolo_no_mosaic"`;
+            the mosaic arm is assumed to cost the same as the arm without mosaic.
+        pilot_exams: Number of exams in the pilot validation fold.
+        margin: Equivalence margin in AP@0.5.
+
+    Returns:
+        Dictionary with the estimated GPU hours per arm and in total, the pilot bootstrap standard error of
+        the difference, the projected half-width of the final 90% interval, the number of exams needed for
+        an informative study, and whether the planned study is informative.
     """
     eq = comparison["equivalence_A_minus_B"]
     se = eq["bootstrap_se"]

@@ -8,14 +8,7 @@ authors:
   - family-names: Bispo
     given-names: Guilherme Dantas
     orcid: "https://orcid.org/0000-0002-4938-2076"
-    affiliation: "Department of Electrical Engineering, University of Brasília (UnB)"
-  - family-names: Serrano
-    given-names: André Luiz Marques
-    orcid: "https://orcid.org/0000-0001-5182-0496"
-    affiliation: "Department of Electrical Engineering, University of Brasília (UnB)"
-  - family-names: Gonçalves
-    given-names: Vinícius Pereira
-    orcid: "https://orcid.org/0000-0002-3771-2605"
+    email: guilherme.bispo@redes.unb.br
     affiliation: "Department of Electrical Engineering, University of Brasília (UnB)"
 keywords:
   - intracranial haemorrhage

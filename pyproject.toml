@@ -9,9 +9,7 @@ description = "Evaluation code for a controlled comparison of RetinaNet and YOLO
 requires-python = ">=3.10"
 license = {text = "AGPL-3.0-only"}
 authors = [
-    {name = "Guilherme Dantas Bispo", email = "guilherme.bispo@redes.unb.br"},
-    {name = "André Luiz Marques Serrano"},
-    {name = "Vinícius Pereira Gonçalves"},
+    {name = "Guilherme Dantas Bispo", email = "guilherme.bispo@redes.unb.br"}
 ]
 dependencies = ["numpy>=1.24", "scipy>=1.10"]
 
