@@ -32,6 +32,59 @@ python3 -m venv .venv
 Training and prediction also need `torch`, `torchvision`, `monai==1.5.2` and `ultralytics>=8.3,<8.4`; the
 experiments were run on Google Colab with NVIDIA L4 GPUs.
 
+## Quick start: evaluating your own detector
+
+The evaluator does not depend on MONAI or Ultralytics. Any detector can be scored with the same box
+matching, average precision, patient-level bootstrap and equivalence test used in the article, so that new
+results are directly comparable.
+
+**Ground truth** is a JSON file with a `validation` list; each entry is one slice, with its image path, the
+reference boxes `[x1, y1, x2, y2]` in pixels (an empty list for slices without haemorrhage) and the exam it
+belongs to:
+
+```json
+{"validation": [
+  {"image": "images/exam01_s012.png", "box": [[100.0, 120.0, 160.0, 190.0]], "exam": "exam01"},
+  {"image": "images/exam01_s013.png", "box": [], "exam": "exam01"}
+]}
+```
+
+**Predictions** are a CSV file with one row per detected box, in the same pixel space; slices without
+detections have no rows:
+
+```text
+image,x1,y1,x2,y2,score
+exam01_s012.png,98.4,118.9,161.2,191.7,0.913
+```
+
+Images are matched by file name. Every slice in the ground truth is evaluated, including slices without
+haemorrhage, so false positives on normal exams lower the score.
+
+```python
+from ichdet import data_io, evaluate
+from ichdet.metrics import DetectionTable
+
+# One detector on one set of slices
+gt = data_io.load_monai_split("fold1.json")
+pred = data_io.load_predictions("detector_a_fold1.csv")
+table = DetectionTable.build(gt, pred)
+print(table.ap50(), table.map50_95(), table.froc())   # AP@0.5, mAP@0.5:0.95, FROC sensitivity
+
+# Two detectors in cross-validation: one (ground truth, detector A, detector B) triple per fold
+folds = [(data_io.load_monai_split(f"fold{k}.json"),
+          data_io.load_predictions(f"detector_a_fold{k}.csv"),
+          data_io.load_predictions(f"detector_b_fold{k}.csv")) for k in (1, 2, 3, 4, 5)]
+result = evaluate.compare_crossval(folds)              # 10,000 paired bootstrap resamples by default
+eq = result["equivalence_A_minus_B"]
+print(result["A"]["ap50"], result["B"]["ap50"])        # mean AP@0.5 over folds
+print(eq["difference"], eq["ci90"], eq["equivalent"])  # A - B, its 90% CI, equivalence within ±0.05
+```
+
+`compare_crossval` resamples whole exams within each fold, so slices of the same patient are always drawn
+together. For a separate test set predicted by several models, use `evaluate.compare_test`. The result also
+reports 95% intervals, mAP@0.5:0.95, FROC sensitivity at 0.5, 1, 2 and 4 false positives per exam, and
+exam-level AUC.
+
 ## Frozen code
 
 `ichdet.experiment.FROZEN_MODULES` lists the modules that determine the results (data reading, matching and
