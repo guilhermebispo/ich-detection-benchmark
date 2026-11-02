@@ -1,0 +1,117 @@
+{
+  "seed": 2026,
+  "operating_point": "1 false positive per examination, per fold model",
+  "thresholds": {
+    "fold1/retinanet": 0.997559,
+    "fold1/yolo_no_mosaic": 0.482242,
+    "fold1/yolo_mosaic": 0.42727,
+    "fold2/retinanet": 0.975586,
+    "fold2/yolo_no_mosaic": 0.483389,
+    "fold2/yolo_mosaic": 0.422463,
+    "fold3/retinanet": 0.969727,
+    "fold3/yolo_no_mosaic": 0.453579,
+    "fold3/yolo_mosaic": 0.380543,
+    "fold4/retinanet": 0.988281,
+    "fold4/yolo_no_mosaic": 0.551084,
+    "fold4/yolo_mosaic": 0.448387,
+    "fold5/retinanet": 0.96582,
+    "fold5/yolo_no_mosaic": 0.397013,
+    "fold5/yolo_mosaic": 0.385368
+  },
+  "examples": [
+    {
+      "exam": "CQ500-CT-109",
+      "fold": 3,
+      "image": "CQ500-CT-109_s015.png",
+      "group": "haemorrhage",
+      "rule": "largest reference box area",
+      "reference_boxes": 2,
+      "subtypes": [
+        "Intraventricular",
+        "Subarachnoid"
+      ],
+      "boxes_shown": {
+        "retinanet": 1,
+        "yolo_no_mosaic": 2,
+        "yolo_mosaic": 1
+      }
+    },
+    {
+      "exam": "CQ500-CT-454",
+      "fold": 5,
+      "image": "CQ500-CT-454_s015.png",
+      "group": "haemorrhage",
+      "rule": "largest reference box area",
+      "reference_boxes": 3,
+      "subtypes": [
+        "Subarachnoid",
+        "Subdural"
+      ],
+      "boxes_shown": {
+        "retinanet": 0,
+        "yolo_no_mosaic": 0,
+        "yolo_mosaic": 1
+      }
+    },
+    {
+      "exam": "CQ500-CT-380",
+      "fold": 2,
+      "image": "CQ500-CT-380_s026.png",
+      "group": "haemorrhage",
+      "rule": "largest reference box area",
+      "reference_boxes": 1,
+      "subtypes": [
+        "Intraparenchymal"
+      ],
+      "boxes_shown": {
+        "retinanet": 1,
+        "yolo_no_mosaic": 0,
+        "yolo_mosaic": 0
+      }
+    },
+    {
+      "exam": "CQ500-CT-183",
+      "fold": 1,
+      "image": "CQ500-CT-183_s027.png",
+      "group": "haemorrhage",
+      "rule": "largest reference box area",
+      "reference_boxes": 1,
+      "subtypes": [
+        "Intraparenchymal"
+      ],
+      "boxes_shown": {
+        "retinanet": 0,
+        "yolo_no_mosaic": 0,
+        "yolo_mosaic": 0
+      }
+    },
+    {
+      "exam": "CQ500-CT-394",
+      "fold": 3,
+      "image": "CQ500-CT-394_s008.png",
+      "group": "normal",
+      "rule": "highest-scoring detection of any arm",
+      "reference_boxes": 0,
+      "subtypes": [],
+      "boxes_shown": {
+        "retinanet": 0,
+        "yolo_no_mosaic": 0,
+        "yolo_mosaic": 0
+      }
+    },
+    {
+      "exam": "CQ500-CT-269",
+      "fold": 2,
+      "image": "CQ500-CT-269_s014.png",
+      "group": "normal",
+      "rule": "highest-scoring detection of any arm",
+      "reference_boxes": 0,
+      "subtypes": [],
+      "boxes_shown": {
+        "retinanet": 0,
+        "yolo_no_mosaic": 0,
+        "yolo_mosaic": 0
+      }
+    }
+  ]
+}

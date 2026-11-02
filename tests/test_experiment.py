@@ -13,28 +13,40 @@ from ichdet import experiment as ex
 from ichdet.yolo import train_arguments
 
 PACKAGE = Path(__file__).resolve().parents[1] / "src" / "ichdet"
-FROZEN_TAG = "artigo1-protocolo-v1.1"
+FROZEN_TAG = "artigo1-protocolo-v1.2"          # amendment: RetinaNet box axes (deviation 1, section 10 of the plan)
+ORIGINAL_TAG = "artigo1-protocolo-v1.1"        # plan as first registered; the first run used this code
 
 
-def test_frozen_modules_are_unchanged_since_the_plan_was_frozen():
-    """Fails if result-determining code changed after freezing (that must be recorded as a deviation)."""
+def _frozen_blobs(tag):
     root = subprocess.run(["git", "rev-parse", "--show-toplevel"], cwd=PACKAGE, capture_output=True, text=True)
     if root.returncode != 0:
         pytest.skip("not a git checkout")
     prefix = PACKAGE.relative_to(root.stdout.strip()).as_posix()
     blobs = {}
     for name in ex.FROZEN_MODULES:
-        r = subprocess.run(["git", "show", f"{FROZEN_TAG}:{prefix}/{name}"], cwd=PACKAGE, capture_output=True)
+        r = subprocess.run(["git", "show", f"{tag}:{prefix}/{name}"], cwd=PACKAGE, capture_output=True)
         if r.returncode != 0:
-            pytest.skip(f"tag {FROZEN_TAG} not available")
+            pytest.skip(f"tag {tag} not available")
         blobs[name] = r.stdout
-    for name, content in blobs.items():
+    return blobs
+
+
+def test_frozen_modules_are_unchanged_since_the_plan_was_frozen():
+    """Fails if result-determining code changed after freezing (that must be recorded as a deviation)."""
+    for name, content in _frozen_blobs(FROZEN_TAG).items():
         assert (PACKAGE / name).read_bytes() == content, f"{name} changed after freezing"
 
 
+def test_only_retinanet_changed_since_the_first_registration():
+    """The amendment touched the RetinaNet input/output only; evaluator, statistics and YOLO are as in v1.1."""
+    for name, content in _frozen_blobs(ORIGINAL_TAG).items():
+        if name != "retinanet.py":
+            assert (PACKAGE / name).read_bytes() == content, f"{name} changed since {ORIGINAL_TAG}"
+
+
 def test_frozen_fingerprint_matches_the_registered_value():
-    """The fingerprint recorded with the analysis plan; holds in any copy of the package, with or without git."""
-    assert ex.frozen_fingerprint(PACKAGE) == "c3752d247a0173f1"
+    """The fingerprint of the amended plan (v1.1 was c3752d247a0173f1); holds in any copy of the package."""
+    assert ex.frozen_fingerprint(PACKAGE) == "a6f3c0fc5798879d"
 
 
 def test_primary_jobs_come_first():

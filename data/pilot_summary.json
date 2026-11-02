@@ -1,0 +1,109 @@
+{
+  "environment": {
+    "ichdet_version": "0.1.0",
+    "ichdet_fingerprint": "a28dcb5c1f14a0ac",
+    "python": "3.13.16",
+    "numpy": "2.1.3",
+    "torch": "2.11.0+cu130",
+    "monai": "1.5.2",
+    "ultralytics": "8.3.253",
+    "gpu": "NVIDIA L4",
+    "date": "2026-10-29"
+  },
+  "design": "pilot: train on CQ500/BHX folds 2-5, validate on fold 1; CT-ICH not used",
+  "training_images": 11995,
+  "validation_images": 3034,
+  "validation_exams": 87,
+  "retinanet_loss_per_epoch": [
+    0.4717,
+    0.4099,
+    0.3732,
+    0.3449,
+    0.3227
+  ],
+  "prediction_seconds": {
+    "retinanet": 514,
+    "yolo_no_mosaic": 48
+  },
+  "comparison_A_retinanet_B_yolo_no_mosaic": {
+    "primary_endpoint": "mean AP@0.5 (single class: hemorrhage)",
+    "A": {
+      "ap50": 0.13913850003706776,
+      "ci95": [
+        0.07233362930251022,
+        0.20880812425305073
+      ],
+      "per_model_ap50": [
+        0.13913850003706776
+      ],
+      "map50_95": 0.043021632098947396,
+      "froc_sensitivity": {
+        "0.5": 0.07886435331230283,
+        "1.0": 0.11356466876971609,
+        "2.0": 0.14195583596214512,
+        "4.0": 0.18401682439537329
+      },
+      "exam_auc": 0.8735449735449735
+    },
+    "B": {
+      "ap50": 0.37635986204384997,
+      "ci95": [
+        0.2957105658822964,
+        0.44683187432185967
+      ],
+      "per_model_ap50": [
+        0.37635986204384997
+      ],
+      "map50_95": 0.15350253475784306,
+      "froc_sensitivity": {
+        "0.5": 0.15141955835962145,
+        "1.0": 0.24605678233438485,
+        "2.0": 0.3007360672975815,
+        "4.0": 0.36803364879074657
+      },
+      "exam_auc": 0.8835978835978836
+    },
+    "equivalence_A_minus_B": {
+      "difference": -0.2372213620067822,
+      "ci90": [
+        -0.29225478909574193,
+        -0.18332817855709965
+      ],
+      "ci95": [
+        -0.30449909397197494,
+        -0.17343321963403852
+      ],
+      "margin": 0.05,
+      "equivalent": false,
+      "bootstrap_se": 0.03340332259236499,
+      "n_resamples": 10000
+    },
+    "seed": 20261029,
+    "design": "validation, stratified by fold",
+    "folds": 1,
+    "exams": 87
+  },
+  "pilot_epochs": 5,
+  "full_epochs": 50,
+  "seconds_per_epoch": {
+    "retinanet": 586.75,
+    "yolo_no_mosaic": 141.46500000000003,
+    "yolo_mosaic": 141.46500000000003
+  },
+  "estimated_training_gpu_hours_full_experiment": {
+    "retinanet": 40.7,
+    "yolo_no_mosaic": 9.8,
+    "yolo_mosaic": 9.8,
+    "total": 60.4
+  },
+  "precision_projection": {
+    "pilot_exams": 87,
+    "pilot_bootstrap_se_of_difference": 0.03340332259236499,
+    "planned_exams": 436,
+    "projected_ci90_half_width": 0.02454331979695891,
+    "margin": 0.05,
+    "exams_needed_if_true_difference_is_0": 106,
+    "informative": true
+  },
+  "note": "Pilot models are under-trained (few epochs); the SE is a planning estimate, not a result."
+}

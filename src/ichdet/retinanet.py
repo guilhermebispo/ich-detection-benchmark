@@ -3,6 +3,12 @@
 Input: the entries of a MONAI split file (`image`, `box`, `label`, `exam`) and the folder that holds
 `images/`. Requires torch, torchvision and monai==1.5.2; imported lazily so that the evaluator does not
 depend on them.
+
+Box axes: the split files and the evaluator use [x1, y1, x2, y2] with x along image columns, whereas MONAI
+reads box coordinate i along spatial axis i of the (C, H, W) tensor, i.e. [row1, col1, row2, col2]. Boxes
+are swapped on the way into MONAI and back on the way out (`_swap_xy`). Version 1.1 of the protocol lacked
+this swap, so its RetinaNet arm was trained on targets mirrored across the image diagonal (deviation 1 in
+section 10 of the plan, amendment v1.2).
 """
 
 from __future__ import annotations
@@ -45,8 +51,13 @@ def build_detector(pretrained_backbone: bool = True):
     return detector
 
 
+def _swap_xy(boxes):
+    """[a1, b1, a2, b2] -> [b1, a1, b2, a2]: converts between [x1, y1, x2, y2] and MONAI's [row1, col1, row2, col2]."""
+    return boxes[..., [1, 0, 3, 2]]
+
+
 class _Slices:
-    """Dataset over split entries: float image (3, H, W) in [0, 1], boxes (M, 4), labels (M,)."""
+    """Dataset over split entries: float image (3, H, W) in [0, 1], boxes (M, 4) in MONAI order, labels (M,)."""
 
     def __init__(self, entries, root, train: bool):
         self.entries, self.root, self.train = entries, Path(root), train
@@ -65,7 +76,7 @@ class _Slices:
             image = image[:, ::-1]
             boxes = np.stack([image.shape[1] - boxes[:, 2], boxes[:, 1], image.shape[1] - boxes[:, 0], boxes[:, 3]], 1)
         return (torch.from_numpy(np.ascontiguousarray(image.transpose(2, 0, 1))),
-                {"box": torch.from_numpy(boxes), "label": torch.zeros(len(boxes), dtype=torch.long)},
+                {"box": torch.from_numpy(np.ascontiguousarray(_swap_xy(boxes))), "label": torch.zeros(len(boxes), dtype=torch.long)},
                 image_key(e["image"]))
 
 
@@ -153,6 +164,6 @@ def predict(checkpoint, entries, root, batch_size: int = cfg.BATCH_SIZE, num_wor
             with torch.autocast(device.type, enabled=device.type == "cuda"):
                 outputs = detector([x.to(device) for x in images], use_inferer=False)
             for name, o in zip(names, outputs):
-                result[name] = (o[detector.target_box_key].float().cpu().numpy().reshape(-1, 4),
+                result[name] = (_swap_xy(o[detector.target_box_key].float().cpu().numpy().reshape(-1, 4)),
                                 o[detector.pred_score_key].float().cpu().numpy().reshape(-1))
     return result

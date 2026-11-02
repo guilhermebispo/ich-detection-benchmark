@@ -5,8 +5,8 @@ Each job trains one arm on four folds of CQ500/BHX, predicts the held-out fold a
 file with a heartbeat lets two Colab sessions share the job list without running the same job twice.
 
 Nothing here changes how models are trained, predicted or evaluated: that is the code frozen with the
-statistical plan (FROZEN_MODULES, git tag `artigo1-protocolo-v1.1`), and `frozen_fingerprint` lets each
-run prove it used that code.
+statistical plan (FROZEN_MODULES, git tag `artigo1-protocolo-v1.2`; the first run used `v1.1`), and
+`frozen_fingerprint` lets each run prove which code it used.
 """
 
 from __future__ import annotations

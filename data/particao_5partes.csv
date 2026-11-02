@@ -1,0 +1,460 @@
+Name,grupo,parte,tipos
+CQ500-CT-0,com sangramento,1,Subarachnoid
+CQ500-CT-1,com sangramento,3,Intraparenchymal;Intraventricular;Subarachnoid
+CQ500-CT-2,normal,1,
+CQ500-CT-3,normal,2,
+CQ500-CT-4,com sangramento,4,Epidural;Intraparenchymal;Subarachnoid;Subdural
+CQ500-CT-5,normal,3,
+CQ500-CT-6,normal,3,
+CQ500-CT-7,normal,3,
+CQ500-CT-9,normal,2,
+CQ500-CT-11,duvidoso,3,
+CQ500-CT-12,com sangramento,5,Chronic;Subdural
+CQ500-CT-13,com sangramento,3,Epidural;Intraparenchymal;Subarachnoid
+CQ500-CT-14,duvidoso,2,
+CQ500-CT-15,com sangramento,4,Intraparenchymal;Subarachnoid
+CQ500-CT-17,normal,2,
+CQ500-CT-18,com sangramento,3,Intraparenchymal
+CQ500-CT-19,com sangramento,3,Intraparenchymal;Intraventricular;Subarachnoid
+CQ500-CT-20,normal,4,
+CQ500-CT-21,normal,5,
+CQ500-CT-23,normal,1,
+CQ500-CT-24,com sangramento,3,Subarachnoid
+CQ500-CT-25,normal,5,
+CQ500-CT-26,normal,1,
+CQ500-CT-27,normal,4,
+CQ500-CT-28,com sangramento,5,Intraparenchymal
+CQ500-CT-31,com sangramento,4,Subarachnoid
+CQ500-CT-32,normal,3,
+CQ500-CT-33,com sangramento,1,Intraventricular;Subarachnoid
+CQ500-CT-34,normal,4,
+CQ500-CT-35,com sangramento,3,Intraparenchymal;Subdural
+CQ500-CT-36,normal,5,
+CQ500-CT-37,normal,2,
+CQ500-CT-38,normal,1,
+CQ500-CT-39,normal,3,
+CQ500-CT-40,com sangramento,2,Intraparenchymal;Subarachnoid
+CQ500-CT-42,normal,2,
+CQ500-CT-43,com sangramento,4,Intraparenchymal;Intraventricular;Subarachnoid
+CQ500-CT-44,normal,2,
+CQ500-CT-45,normal,5,
+CQ500-CT-46,normal,1,
+CQ500-CT-47,normal,2,
+CQ500-CT-48,com sangramento,5,Intraparenchymal;Intraventricular;Subarachnoid
+CQ500-CT-49,normal,1,
+CQ500-CT-50,normal,2,
+CQ500-CT-51,normal,5,
+CQ500-CT-52,duvidoso,1,
+CQ500-CT-53,normal,4,
+CQ500-CT-54,normal,2,
+CQ500-CT-55,com sangramento,4,Intraparenchymal;Intraventricular
+CQ500-CT-56,com sangramento,4,Subarachnoid
+CQ500-CT-57,com sangramento,4,Intraparenchymal;Subarachnoid
+CQ500-CT-58,normal,1,
+CQ500-CT-59,com sangramento,3,Intraventricular;Subarachnoid
+CQ500-CT-60,com sangramento,5,Intraparenchymal
+CQ500-CT-61,com sangramento,4,Subdural
+CQ500-CT-62,normal,4,
+CQ500-CT-63,com sangramento,5,Subdural
+CQ500-CT-64,com sangramento,4,Subarachnoid;Subdural
+CQ500-CT-65,com sangramento,4,Subdural
+CQ500-CT-66,duvidoso,3,
+CQ500-CT-67,com sangramento,4,Subdural
+CQ500-CT-68,com sangramento,5,Intraparenchymal
+CQ500-CT-69,normal,5,
+CQ500-CT-70,normal,1,
+CQ500-CT-71,normal,4,
+CQ500-CT-72,normal,3,
+CQ500-CT-73,normal,3,
+CQ500-CT-74,normal,1,
+CQ500-CT-75,com sangramento,5,Intraparenchymal;Intraventricular;Subarachnoid
+CQ500-CT-76,normal,3,
+CQ500-CT-77,normal,3,
+CQ500-CT-78,normal,4,
+CQ500-CT-80,com sangramento,4,Intraparenchymal;Intraventricular;Subdural
+CQ500-CT-81,normal,3,
+CQ500-CT-83,normal,5,
+CQ500-CT-84,com sangramento,4,Subarachnoid
+CQ500-CT-85,normal,3,
+CQ500-CT-86,com sangramento,2,Subdural
+CQ500-CT-87,com sangramento,4,Subdural
+CQ500-CT-88,normal,3,
+CQ500-CT-89,normal,2,
+CQ500-CT-90,com sangramento,4,Intraparenchymal
+CQ500-CT-91,normal,5,
+CQ500-CT-92,com sangramento,3,Intraparenchymal
+CQ500-CT-93,normal,1,
+CQ500-CT-94,normal,5,
+CQ500-CT-95,com sangramento,4,Intraparenchymal;Intraventricular
+CQ500-CT-96,normal,5,
+CQ500-CT-97,normal,2,
+CQ500-CT-98,normal,3,
+CQ500-CT-99,normal,2,
+CQ500-CT-100,normal,4,
+CQ500-CT-101,normal,3,
+CQ500-CT-102,com sangramento,2,Subarachnoid
+CQ500-CT-103,normal,1,
+CQ500-CT-104,normal,2,
+CQ500-CT-105,normal,1,
+CQ500-CT-106,com sangramento,2,Subdural
+CQ500-CT-107,com sangramento,1,Intraparenchymal;Intraventricular;Subarachnoid;Subdural
+CQ500-CT-108,duvidoso,3,
+CQ500-CT-109,com sangramento,3,Intraventricular;Subarachnoid
+CQ500-CT-110,normal,5,
+CQ500-CT-111,com sangramento,5,Intraparenchymal;Subarachnoid
+CQ500-CT-112,normal,5,
+CQ500-CT-113,com sangramento,2,Intraparenchymal
+CQ500-CT-114,com sangramento,1,Chronic;Subdural
+CQ500-CT-115,com sangramento,3,Intraparenchymal
+CQ500-CT-116,normal,4,
+CQ500-CT-117,normal,4,
+CQ500-CT-118,com sangramento,2,Intraparenchymal
+CQ500-CT-119,normal,1,
+CQ500-CT-121,com sangramento,4,Intraparenchymal;Subarachnoid
+CQ500-CT-122,normal,2,
+CQ500-CT-123,normal,5,
+CQ500-CT-124,normal,3,
+CQ500-CT-125,com sangramento,5,Epidural;Subarachnoid
+CQ500-CT-126,com sangramento,5,Intraparenchymal
+CQ500-CT-127,normal,1,
+CQ500-CT-128,com sangramento,5,Intraparenchymal
+CQ500-CT-129,com sangramento,5,Subdural
+CQ500-CT-130,normal,3,
+CQ500-CT-131,normal,4,
+CQ500-CT-132,normal,1,
+CQ500-CT-133,com sangramento,1,Intraparenchymal
+CQ500-CT-134,com sangramento,5,Subarachnoid
+CQ500-CT-135,com sangramento,3,Intraparenchymal;Intraventricular
+CQ500-CT-136,com sangramento,1,Intraparenchymal;Subarachnoid;Subdural
+CQ500-CT-137,com sangramento,1,Epidural
+CQ500-CT-138,normal,5,
+CQ500-CT-139,com sangramento,3,Subarachnoid;Subdural
+CQ500-CT-140,com sangramento,3,Intraparenchymal
+CQ500-CT-141,normal,4,
+CQ500-CT-142,normal,2,
+CQ500-CT-143,duvidoso,5,
+CQ500-CT-144,duvidoso,3,
+CQ500-CT-145,normal,4,
+CQ500-CT-146,normal,2,
+CQ500-CT-147,com sangramento,5,Subarachnoid
+CQ500-CT-148,normal,3,
+CQ500-CT-149,com sangramento,1,Intraparenchymal;Intraventricular;Subarachnoid
+CQ500-CT-150,normal,1,
+CQ500-CT-151,normal,2,
+CQ500-CT-152,normal,1,
+CQ500-CT-154,com sangramento,5,Intraparenchymal
+CQ500-CT-155,com sangramento,5,Subdural
+CQ500-CT-156,normal,4,
+CQ500-CT-157,com sangramento,2,Intraparenchymal
+CQ500-CT-159,com sangramento,4,Subdural
+CQ500-CT-160,normal,4,
+CQ500-CT-161,normal,5,
+CQ500-CT-162,normal,2,
+CQ500-CT-164,normal,1,
+CQ500-CT-165,normal,5,
+CQ500-CT-166,com sangramento,3,Intraparenchymal;Subarachnoid
+CQ500-CT-167,normal,5,
+CQ500-CT-168,duvidoso,3,
+CQ500-CT-169,duvidoso,1,
+CQ500-CT-170,normal,5,
+CQ500-CT-171,normal,4,
+CQ500-CT-172,normal,3,
+CQ500-CT-173,com sangramento,2,Intraparenchymal;Subarachnoid;Subdural
+CQ500-CT-174,normal,2,
+CQ500-CT-175,normal,3,
+CQ500-CT-176,com sangramento,2,Subarachnoid
+CQ500-CT-177,normal,5,
+CQ500-CT-178,normal,1,
+CQ500-CT-179,normal,3,
+CQ500-CT-180,normal,3,
+CQ500-CT-181,com sangramento,1,Intraparenchymal;Subarachnoid;Subdural
+CQ500-CT-182,com sangramento,3,Intraparenchymal;Subarachnoid
+CQ500-CT-183,com sangramento,1,Intraparenchymal
+CQ500-CT-184,normal,3,
+CQ500-CT-185,normal,4,
+CQ500-CT-186,com sangramento,3,Subdural
+CQ500-CT-187,com sangramento,5,Subarachnoid;Subdural
+CQ500-CT-188,com sangramento,3,Intraparenchymal;Subarachnoid
+CQ500-CT-189,com sangramento,1,Intraparenchymal
+CQ500-CT-190,com sangramento,2,Chronic;Subdural
+CQ500-CT-191,normal,4,
+CQ500-CT-192,com sangramento,5,Subdural
+CQ500-CT-193,normal,4,
+CQ500-CT-194,normal,2,
+CQ500-CT-195,normal,5,
+CQ500-CT-196,com sangramento,2,Intraparenchymal
+CQ500-CT-197,normal,1,
+CQ500-CT-198,normal,5,
+CQ500-CT-199,normal,5,
+CQ500-CT-200,normal,5,
+CQ500-CT-202,com sangramento,5,Subarachnoid
+CQ500-CT-203,com sangramento,5,Subarachnoid
+CQ500-CT-205,duvidoso,1,
+CQ500-CT-207,com sangramento,5,Intraparenchymal;Subarachnoid
+CQ500-CT-208,com sangramento,4,Intraparenchymal;Subarachnoid
+CQ500-CT-209,normal,3,
+CQ500-CT-210,com sangramento,1,Chronic;Subdural
+CQ500-CT-211,com sangramento,4,Intraparenchymal;Subarachnoid
+CQ500-CT-212,normal,4,
+CQ500-CT-213,com sangramento,2,Intraparenchymal
+CQ500-CT-214,normal,2,
+CQ500-CT-215,com sangramento,1,Subarachnoid
+CQ500-CT-216,com sangramento,1,Intraparenchymal;Subarachnoid;Subdural
+CQ500-CT-217,com sangramento,1,Intraparenchymal
+CQ500-CT-218,normal,3,
+CQ500-CT-219,com sangramento,4,Chronic;Intraparenchymal;Subdural
+CQ500-CT-220,duvidoso,5,
+CQ500-CT-221,com sangramento,3,Subarachnoid
+CQ500-CT-222,normal,1,
+CQ500-CT-223,normal,5,
+CQ500-CT-224,com sangramento,1,Subarachnoid
+CQ500-CT-225,com sangramento,1,Intraparenchymal;Subarachnoid
+CQ500-CT-226,com sangramento,5,Intraparenchymal;Subarachnoid
+CQ500-CT-227,com sangramento,2,Intraparenchymal;Intraventricular;Subarachnoid
+CQ500-CT-228,com sangramento,3,Intraparenchymal;Subarachnoid;Subdural
+CQ500-CT-229,normal,1,
+CQ500-CT-231,normal,5,
+CQ500-CT-232,normal,5,
+CQ500-CT-233,normal,1,
+CQ500-CT-234,com sangramento,5,Chronic;Subdural
+CQ500-CT-235,normal,4,
+CQ500-CT-236,com sangramento,5,Intraparenchymal
+CQ500-CT-237,com sangramento,2,Intraparenchymal
+CQ500-CT-238,com sangramento,2,Chronic;Subdural
+CQ500-CT-239,com sangramento,3,Chronic;Subdural
+CQ500-CT-240,com sangramento,1,Intraparenchymal;Intraventricular;Subarachnoid
+CQ500-CT-241,duvidoso,5,
+CQ500-CT-242,normal,1,
+CQ500-CT-243,com sangramento,2,Chronic;Subdural
+CQ500-CT-244,normal,1,
+CQ500-CT-245,com sangramento,3,Intraparenchymal;Intraventricular;Subarachnoid
+CQ500-CT-246,normal,5,
+CQ500-CT-247,com sangramento,4,Intraparenchymal;Subarachnoid
+CQ500-CT-248,com sangramento,2,Subdural
+CQ500-CT-249,com sangramento,4,Intraparenchymal
+CQ500-CT-250,com sangramento,2,Subarachnoid
+CQ500-CT-251,com sangramento,5,Intraparenchymal;Intraventricular;Subarachnoid;Subdural
+CQ500-CT-252,normal,1,
+CQ500-CT-253,normal,5,
+CQ500-CT-254,com sangramento,1,Subarachnoid
+CQ500-CT-255,normal,4,
+CQ500-CT-256,com sangramento,5,Intraparenchymal;Intraventricular;Subarachnoid
+CQ500-CT-257,com sangramento,3,Subdural
+CQ500-CT-258,normal,1,
+CQ500-CT-259,normal,2,
+CQ500-CT-260,com sangramento,1,Intraparenchymal;Subdural
+CQ500-CT-261,normal,4,
+CQ500-CT-262,normal,5,
+CQ500-CT-263,com sangramento,2,Intraparenchymal
+CQ500-CT-264,com sangramento,4,Intraparenchymal;Intraventricular;Subarachnoid
+CQ500-CT-265,duvidoso,4,
+CQ500-CT-266,com sangramento,3,Intraparenchymal
+CQ500-CT-267,normal,4,
+CQ500-CT-268,duvidoso,1,
+CQ500-CT-269,normal,2,
+CQ500-CT-270,normal,4,
+CQ500-CT-271,normal,2,
+CQ500-CT-273,com sangramento,2,Intraparenchymal
+CQ500-CT-274,com sangramento,2,Subdural
+CQ500-CT-275,com sangramento,5,Subarachnoid;Subdural
+CQ500-CT-277,com sangramento,1,Chronic;Subdural
+CQ500-CT-278,com sangramento,2,Subdural
+CQ500-CT-279,com sangramento,4,Intraparenchymal
+CQ500-CT-280,normal,2,
+CQ500-CT-281,normal,4,
+CQ500-CT-282,normal,2,
+CQ500-CT-283,com sangramento,5,Chronic
+CQ500-CT-284,com sangramento,4,Chronic
+CQ500-CT-285,com sangramento,1,Chronic;Intraparenchymal;Intraventricular;Subarachnoid;Subdural
+CQ500-CT-286,normal,1,
+CQ500-CT-287,normal,3,
+CQ500-CT-288,com sangramento,4,Subarachnoid
+CQ500-CT-289,normal,3,
+CQ500-CT-290,normal,5,
+CQ500-CT-291,com sangramento,1,Intraparenchymal
+CQ500-CT-292,normal,5,
+CQ500-CT-293,normal,4,
+CQ500-CT-294,normal,2,
+CQ500-CT-295,normal,1,
+CQ500-CT-296,com sangramento,5,Intraparenchymal;Intraventricular
+CQ500-CT-297,com sangramento,4,Chronic;Subdural
+CQ500-CT-299,normal,4,
+CQ500-CT-300,normal,3,
+CQ500-CT-301,normal,5,
+CQ500-CT-302,normal,1,
+CQ500-CT-303,com sangramento,3,Subarachnoid
+CQ500-CT-304,normal,3,
+CQ500-CT-305,com sangramento,1,Intraparenchymal;Subarachnoid;Subdural
+CQ500-CT-306,normal,2,
+CQ500-CT-307,normal,5,
+CQ500-CT-308,normal,2,
+CQ500-CT-309,com sangramento,3,Intraparenchymal;Subarachnoid;Subdural
+CQ500-CT-310,com sangramento,3,Chronic;Subdural
+CQ500-CT-311,normal,1,
+CQ500-CT-312,com sangramento,5,Intraparenchymal;Subarachnoid;Subdural
+CQ500-CT-313,normal,2,
+CQ500-CT-314,com sangramento,2,Intraparenchymal
+CQ500-CT-315,normal,3,
+CQ500-CT-316,com sangramento,4,Intraparenchymal;Subarachnoid;Subdural
+CQ500-CT-317,normal,5,
+CQ500-CT-318,com sangramento,3,Chronic;Subdural
+CQ500-CT-319,normal,4,
+CQ500-CT-320,normal,1,
+CQ500-CT-321,normal,2,
+CQ500-CT-322,normal,3,
+CQ500-CT-323,normal,2,
+CQ500-CT-324,normal,5,
+CQ500-CT-325,normal,1,
+CQ500-CT-326,com sangramento,5,Subdural
+CQ500-CT-327,normal,5,
+CQ500-CT-328,com sangramento,4,Intraparenchymal;Subarachnoid;Subdural
+CQ500-CT-329,normal,2,
+CQ500-CT-330,normal,4,
+CQ500-CT-331,normal,4,
+CQ500-CT-333,normal,5,
+CQ500-CT-334,com sangramento,2,Intraparenchymal;Intraventricular;Subarachnoid
+CQ500-CT-335,normal,2,
+CQ500-CT-337,com sangramento,4,Subarachnoid
+CQ500-CT-338,com sangramento,3,Intraparenchymal
+CQ500-CT-340,com sangramento,1,Chronic;Subdural
+CQ500-CT-341,duvidoso,2,
+CQ500-CT-342,com sangramento,4,Intraparenchymal;Intraventricular;Subarachnoid
+CQ500-CT-344,com sangramento,5,Intraparenchymal;Intraventricular
+CQ500-CT-345,com sangramento,1,Intraparenchymal;Intraventricular
+CQ500-CT-346,com sangramento,5,Chronic;Intraparenchymal;Subarachnoid;Subdural
+CQ500-CT-347,com sangramento,3,Intraparenchymal;Subarachnoid;Subdural
+CQ500-CT-348,com sangramento,5,Intraventricular;Subarachnoid
+CQ500-CT-349,normal,5,
+CQ500-CT-350,normal,3,
+CQ500-CT-351,com sangramento,2,Subdural
+CQ500-CT-352,com sangramento,4,Intraparenchymal
+CQ500-CT-353,normal,3,
+CQ500-CT-355,com sangramento,1,Intraparenchymal
+CQ500-CT-356,duvidoso,4,
+CQ500-CT-357,normal,2,
+CQ500-CT-358,com sangramento,3,Chronic;Subdural
+CQ500-CT-359,com sangramento,4,Chronic;Subdural
+CQ500-CT-360,normal,2,
+CQ500-CT-361,normal,4,
+CQ500-CT-362,com sangramento,1,Subarachnoid;Subdural
+CQ500-CT-363,com sangramento,5,Intraparenchymal;Intraventricular;Subarachnoid
+CQ500-CT-364,com sangramento,5,Chronic;Subdural
+CQ500-CT-365,normal,4,
+CQ500-CT-366,duvidoso,5,
+CQ500-CT-367,normal,2,
+CQ500-CT-368,normal,3,
+CQ500-CT-370,com sangramento,2,Chronic
+CQ500-CT-371,com sangramento,2,Intraparenchymal;Subarachnoid;Subdural
+CQ500-CT-372,duvidoso,4,
+CQ500-CT-373,normal,4,
+CQ500-CT-374,com sangramento,3,Chronic
+CQ500-CT-375,normal,4,
+CQ500-CT-376,com sangramento,4,Intraparenchymal;Subarachnoid;Subdural
+CQ500-CT-377,com sangramento,3,Subarachnoid;Subdural
+CQ500-CT-378,com sangramento,2,Subarachnoid
+CQ500-CT-379,com sangramento,1,Subdural
+CQ500-CT-380,com sangramento,2,Intraparenchymal;Subarachnoid
+CQ500-CT-382,com sangramento,1,Subarachnoid;Subdural
+CQ500-CT-383,com sangramento,3,Chronic;Intraventricular;Subarachnoid
+CQ500-CT-384,duvidoso,4,
+CQ500-CT-385,com sangramento,3,Subarachnoid
+CQ500-CT-386,com sangramento,1,Subdural
+CQ500-CT-387,normal,1,
+CQ500-CT-388,duvidoso,1,
+CQ500-CT-389,normal,4,
+CQ500-CT-390,normal,3,
+CQ500-CT-391,com sangramento,2,Subarachnoid
+CQ500-CT-392,com sangramento,5,Intraparenchymal
+CQ500-CT-394,normal,3,
+CQ500-CT-395,normal,4,
+CQ500-CT-396,duvidoso,2,
+CQ500-CT-397,com sangramento,3,Intraparenchymal;Subdural
+CQ500-CT-398,com sangramento,1,Intraventricular;Subarachnoid
+CQ500-CT-399,com sangramento,2,Intraparenchymal;Subarachnoid
+CQ500-CT-400,com sangramento,1,Chronic;Intraparenchymal;Subarachnoid;Subdural
+CQ500-CT-401,normal,1,
+CQ500-CT-402,com sangramento,2,Intraparenchymal;Subarachnoid;Subdural
+CQ500-CT-403,com sangramento,2,Intraventricular;Subarachnoid
+CQ500-CT-404,com sangramento,4,Chronic;Subdural
+CQ500-CT-405,normal,3,
+CQ500-CT-406,com sangramento,1,Subarachnoid
+CQ500-CT-407,normal,2,
+CQ500-CT-408,com sangramento,4,Intraparenchymal
+CQ500-CT-409,normal,5,
+CQ500-CT-410,normal,1,
+CQ500-CT-411,normal,1,
+CQ500-CT-412,com sangramento,5,Chronic;Subdural
+CQ500-CT-413,com sangramento,2,Intraparenchymal;Intraventricular;Subarachnoid
+CQ500-CT-414,com sangramento,4,Subarachnoid
+CQ500-CT-415,com sangramento,5,Subarachnoid
+CQ500-CT-416,com sangramento,1,Intraparenchymal;Subarachnoid
+CQ500-CT-417,com sangramento,3,Intraparenchymal;Subdural
+CQ500-CT-418,normal,5,
+CQ500-CT-419,com sangramento,2,Intraparenchymal
+CQ500-CT-420,com sangramento,2,Chronic;Intraparenchymal;Intraventricular;Subarachnoid;Subdural
+CQ500-CT-421,normal,3,
+CQ500-CT-422,com sangramento,5,Intraparenchymal;Subarachnoid
+CQ500-CT-423,com sangramento,1,Intraparenchymal
+CQ500-CT-425,com sangramento,5,Intraparenchymal
+CQ500-CT-426,com sangramento,1,Intraparenchymal
+CQ500-CT-427,com sangramento,5,Intraparenchymal
+CQ500-CT-428,normal,2,
+CQ500-CT-429,com sangramento,2,Subarachnoid
+CQ500-CT-430,com sangramento,1,Intraparenchymal
+CQ500-CT-431,normal,1,
+CQ500-CT-432,com sangramento,2,Subarachnoid
+CQ500-CT-433,normal,4,
+CQ500-CT-434,com sangramento,3,Epidural;Subarachnoid
+CQ500-CT-435,com sangramento,4,Subarachnoid;Subdural
+CQ500-CT-436,duvidoso,2,
+CQ500-CT-437,normal,2,
+CQ500-CT-438,com sangramento,5,Subarachnoid;Subdural
+CQ500-CT-439,normal,3,
+CQ500-CT-440,normal,4,
+CQ500-CT-441,normal,3,
+CQ500-CT-442,normal,1,
+CQ500-CT-443,com sangramento,3,Intraparenchymal;Subarachnoid;Subdural
+CQ500-CT-444,normal,3,
+CQ500-CT-445,normal,4,
+CQ500-CT-446,com sangramento,3,Intraparenchymal
+CQ500-CT-447,com sangramento,1,Subarachnoid;Subdural
+CQ500-CT-449,com sangramento,2,Intraparenchymal;Subarachnoid;Subdural
+CQ500-CT-450,normal,5,
+CQ500-CT-451,normal,1,
+CQ500-CT-452,com sangramento,2,Intraventricular;Subarachnoid
+CQ500-CT-453,normal,3,
+CQ500-CT-454,com sangramento,5,Intraparenchymal;Subarachnoid;Subdural
+CQ500-CT-456,com sangramento,3,Intraparenchymal;Subarachnoid;Subdural
+CQ500-CT-457,com sangramento,4,Intraparenchymal;Intraventricular
+CQ500-CT-458,com sangramento,4,Chronic;Subdural
+CQ500-CT-459,normal,3,
+CQ500-CT-460,normal,2,
+CQ500-CT-461,com sangramento,2,Intraparenchymal;Subarachnoid;Subdural
+CQ500-CT-462,normal,1,
+CQ500-CT-463,normal,3,
+CQ500-CT-464,normal,4,
+CQ500-CT-465,normal,5,
+CQ500-CT-466,normal,1,
+CQ500-CT-467,normal,2,
+CQ500-CT-468,normal,3,
+CQ500-CT-469,com sangramento,2,Intraparenchymal;Intraventricular;Subarachnoid;Subdural
+CQ500-CT-470,normal,4,
+CQ500-CT-471,normal,4,
+CQ500-CT-472,normal,5,
+CQ500-CT-473,com sangramento,1,Intraparenchymal;Intraventricular;Subarachnoid
+CQ500-CT-474,duvidoso,2,
+CQ500-CT-476,normal,5,
+CQ500-CT-477,normal,2,
+CQ500-CT-478,normal,2,
+CQ500-CT-479,com sangramento,2,Epidural;Intraparenchymal
+CQ500-CT-480,com sangramento,2,Chronic;Subdural
+CQ500-CT-481,com sangramento,4,Intraparenchymal;Intraventricular
+CQ500-CT-482,normal,1,
+CQ500-CT-483,com sangramento,1,Intraventricular;Subarachnoid
+CQ500-CT-484,normal,1,
+CQ500-CT-485,com sangramento,1,Intraparenchymal
+CQ500-CT-486,com sangramento,4,Subarachnoid
+CQ500-CT-487,normal,4,
+CQ500-CT-488,com sangramento,3,Intraparenchymal;Intraventricular;Subarachnoid
+CQ500-CT-489,com sangramento,2,Intraventricular;Subarachnoid
+CQ500-CT-490,normal,1,

@@ -1,0 +1,22 @@
+{
+  "exames": 75,
+  "exames_com_caixa": 36,
+  "cortes": 2814,
+  "cortes_com_caixa": 318,
+  "caixas": 397,
+  "manchas_descartadas_menos_de_10_pixels": 42,
+  "lado_maior_da_caixa_pixels_mediana": 60.0,
+  "tamanhos_de_corte": [
+    [
+      512,
+      512
+    ]
+  ],
+  "pixel_mm_faixa": [
+    0.314453125,
+    0.48828125
+  ],
+  "espessura_mm": [
+    5.0
+  ]
+}

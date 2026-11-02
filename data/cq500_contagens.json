@@ -1,0 +1,71 @@
+{
+  "regra": 2,
+  "validacao_regra_geral": {
+    "exames_com_caixa": 226,
+    "serie_marcada": 200,
+    "copia_da_marcada": 12,
+    "divergentes": [
+      "CQ500-CT-10",
+      "CQ500-CT-125",
+      "CQ500-CT-153",
+      "CQ500-CT-22",
+      "CQ500-CT-29",
+      "CQ500-CT-343",
+      "CQ500-CT-369",
+      "CQ500-CT-381",
+      "CQ500-CT-393",
+      "CQ500-CT-403",
+      "CQ500-CT-41",
+      "CQ500-CT-430",
+      "CQ500-CT-455",
+      "CQ500-CT-8"
+    ]
+  },
+  "so_cortes_finos": [
+    "CQ500-CT-10",
+    "CQ500-CT-153",
+    "CQ500-CT-22",
+    "CQ500-CT-29",
+    "CQ500-CT-343",
+    "CQ500-CT-393",
+    "CQ500-CT-41",
+    "CQ500-CT-455",
+    "CQ500-CT-8"
+  ],
+  "serie_com_contraste": [
+    "CQ500-CT-369",
+    "CQ500-CT-381"
+  ],
+  "grupos": {
+    "com sangramento": {
+      "exames": 215,
+      "cortes": 7569,
+      "cortes_com_caixa": 2748
+    },
+    "normal": {
+      "exames": 221,
+      "cortes": 7460,
+      "cortes_com_caixa": 0
+    },
+    "com sangramento, só cortes finos": {
+      "exames": 9,
+      "cortes": 2166,
+      "cortes_com_caixa": 707
+    },
+    "duvidoso": {
+      "exames": 23,
+      "cortes": 820,
+      "cortes_com_caixa": 0
+    },
+    "sem série grossa": {
+      "exames": 21,
+      "cortes": 0,
+      "cortes_com_caixa": 0
+    },
+    "com sangramento, série com contraste": {
+      "exames": 2,
+      "cortes": 60,
+      "cortes_com_caixa": 23
+    }
+  }
+}

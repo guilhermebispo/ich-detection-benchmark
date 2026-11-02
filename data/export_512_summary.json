@@ -1,0 +1,119 @@
+{
+  "pixel_spacing_mm": 0.488281,
+  "image_size_px": 512,
+  "field_of_view_mm": 250.0,
+  "interpolation": "bilinear (scipy.ndimage.affine_transform, order=1)",
+  "padding_hu": -1024.0,
+  "windows_level_width_hu": {
+    "brain": [
+      40,
+      80
+    ],
+    "subdural": [
+      80,
+      200
+    ],
+    "bone": [
+      600,
+      2800
+    ]
+  },
+  "image_format": "PNG, 8-bit, 3 channels (brain, subdural, bone)",
+  "training_classes": [
+    "hemorrhage"
+  ],
+  "cq500": {
+    "exams": 459,
+    "slices": 15849,
+    "slices_with_boxes": 2759,
+    "boxes": 4616,
+    "original_pixel_mm_range": [
+      0.355469,
+      0.644531
+    ],
+    "scale_factor_range": [
+      0.728,
+      1.32
+    ],
+    "head_extent_mm_median_max": [
+      196.9,
+      262.0
+    ],
+    "heads_wider_than_field_of_view": 2,
+    "box_longest_side_mm_median_p5_p95": [
+      51.3,
+      14.9,
+      145.3
+    ]
+  },
+  "cq500_folds_main_analysis": {
+    "fold1": {
+      "exams": 87,
+      "slices": 3034,
+      "slices_with_boxes": 557
+    },
+    "fold2": {
+      "exams": 89,
+      "slices": 3073,
+      "slices_with_boxes": 570
+    },
+    "fold3": {
+      "exams": 85,
+      "slices": 2921,
+      "slices_with_boxes": 556
+    },
+    "fold4": {
+      "exams": 87,
+      "slices": 3000,
+      "slices_with_boxes": 535
+    },
+    "fold5": {
+      "exams": 88,
+      "slices": 3001,
+      "slices_with_boxes": 541
+    }
+  },
+  "cq500_equivocal_slices": 820,
+  "ct_ich": {
+    "exams": 75,
+    "slices": 2814,
+    "slices_with_boxes": 318,
+    "boxes": 397,
+    "original_pixel_mm_range": [
+      0.314453125,
+      0.48828125
+    ],
+    "scale_factor_range": [
+      0.644,
+      1.0
+    ],
+    "head_extent_mm_median_max": [
+      199.9,
+      231.0
+    ],
+    "heads_wider_than_field_of_view": 0,
+    "box_longest_side_mm_median_p5_p95": [
+      25.8,
+      8.0,
+      96.5
+    ]
+  },
+  "tests": {
+    "cq500": {
+      "images": 15849,
+      "boxes": 4616,
+      "max_box_difference_yolo_vs_monai_px": 0.00084,
+      "png_reread_identical": "201/201",
+      "boxes_clipped_at_border": 0,
+      "same_file_lists_monai_yolo": true
+    },
+    "ctich": {
+      "images": 2814,
+      "boxes": 397,
+      "max_box_difference_yolo_vs_monai_px": 0.00042,
+      "png_reread_identical": "201/201",
+      "boxes_clipped_at_border": 0,
+      "same_file_lists_monai_yolo": true
+    }
+  }
+}

@@ -1,0 +1,67 @@
+{
+  "frozen_code_fingerprint": "a6f3c0fc5798879d",
+  "jobs_done": 5,
+  "jobs_total": 5,
+  "jobs": {
+    "fold1/retinanet": {
+      "epochs": 50,
+      "training_images": 11995,
+      "validation_images": 3034,
+      "validation_exams": 87,
+      "seconds_per_epoch": 589.9,
+      "prediction_seconds": 93,
+      "boxes_predicted": 4537,
+      "finished": "2026-10-31 22:30:50",
+      "session": "39231841a7be-4122",
+      "gpu": "NVIDIA L4"
+    },
+    "fold2/retinanet": {
+      "epochs": 50,
+      "training_images": 11956,
+      "validation_images": 3073,
+      "validation_exams": 89,
+      "seconds_per_epoch": 588.5,
+      "prediction_seconds": 90,
+      "boxes_predicted": 1388,
+      "finished": "2026-11-01 06:43:19",
+      "session": "39231841a7be-4122",
+      "gpu": "NVIDIA L4"
+    },
+    "fold3/retinanet": {
+      "epochs": 50,
+      "training_images": 12108,
+      "validation_images": 2921,
+      "validation_exams": 85,
+      "seconds_per_epoch": 590.1,
+      "prediction_seconds": 87,
+      "boxes_predicted": 1807,
+      "finished": "2026-10-31 22:34:41",
+      "session": "ca59dd121278-3690",
+      "gpu": "NVIDIA L4"
+    },
+    "fold4/retinanet": {
+      "epochs": 50,
+      "training_images": 12029,
+      "validation_images": 3000,
+      "validation_exams": 87,
+      "seconds_per_epoch": 586.6,
+      "prediction_seconds": 89,
+      "boxes_predicted": 1819,
+      "finished": "2026-11-01 06:45:23",
+      "session": "ca59dd121278-3690",
+      "gpu": "NVIDIA L4"
+    },
+    "fold5/retinanet": {
+      "epochs": 50,
+      "training_images": 12028,
+      "validation_images": 3001,
+      "validation_exams": 88,
+      "seconds_per_epoch": 587.6,
+      "prediction_seconds": 88,
+      "boxes_predicted": 1168,
+      "finished": "2026-11-01 21:26:52",
+      "session": "7ec7b2a2007b-3936",
+      "gpu": "NVIDIA L4"
+    }
+  }
+}
