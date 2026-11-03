@@ -19,7 +19,7 @@ download of the datasets to the figures of the article, is in this repository.
 |---|---|
 | `src/ichdet/` | Python package: a single evaluator for both detectors (`metrics.py`, `stats.py`, `evaluate.py`), training and prediction (`retinanet.py`, `yolo.py`), shared settings (`training_config.py`), the job runner of the experiment (`experiment.py`), the pilot summary (`pilot.py`) and the remaining pre-specified analyses (`final.py`) |
 | `tests/` | Automated tests (`pytest`), including cross-checks against pycocotools and tests of the RetinaNet box axes |
-| `notebooks/` | The ten Google Colab notebooks that ran the study, in order (see [Pipeline](#pipeline)) |
+| `notebooks/` | The eleven Google Colab notebooks that ran the study, in order (see [Pipeline](#pipeline)) |
 | `data/` | Derived data: cohort and series selection, the five folds, the BHX reference boxes used, counts, training records and the aggregated results (see [Derived data](#derived-data)) |
 | `docs/` | The registered statistical analysis plan (`statistical_protocol.md`) and its amendment (`osf_amendment_v1.2.md`) |
 | `tools/make_figures.py` | Draws the result figures and the summary table of the article from the files in `data/` |
@@ -41,6 +41,7 @@ run in this order:
 | `08_retreino_retinanet` | Retraining of the five RetinaNet models with the corrected box axes (deviation 1) | GPU, ~41 h |
 | `09_avaliacao_correcao` | Evaluation of the corrected RetinaNet against the YOLO predictions of the first run | GPU |
 | `10_figura_exemplos` | Figure of qualitative examples, chosen by a rule fixed before looking at the images | CPU |
+| `11_figura_preprocessamento` | Preprocessing figure of the article (same slice and geometry as notebook 04, without titles) | CPU |
 
 To run them, copy `src/ichdet` to `MyDrive/ich-benchmark/codigo/ichdet/` on your Drive. The notebooks
 create the data folders under `MyDrive/ich-benchmark/dados/`. Long jobs resume from the last saved epoch
