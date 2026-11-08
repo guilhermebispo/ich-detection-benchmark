@@ -27,6 +27,8 @@ DATA = Path(sys.argv[1])
 OUT = Path(sys.argv[2]) / "figures"
 CORRECTED = json.loads((DATA / "correcao_retinanet" / "final_results.json").read_text())
 FIRST = json.loads((DATA / "final_results.json").read_text())
+# Exploratory endpoints (notebook 12, meeting of 5 Nov 2026); not part of the registered plan
+EXPLORATORY = json.loads((DATA / "correcao_retinanet" / "exploratory_results.json").read_text())
 
 ARMS = ("retinanet", "yolo_no_mosaic", "yolo_mosaic")
 NAME = {"retinanet": "RetinaNet", "yolo_no_mosaic": "YOLOv8m, no mosaic", "yolo_mosaic": "YOLOv8m, mosaic"}
@@ -267,6 +269,7 @@ def table_summary():
         ("mAP@0.5:0.95", lambda a: f"{validation(a)['map50_95']:.3f}"),
         ("FROC sensitivity at 1 FP/exam", lambda a: f"{validation(a)['froc_sensitivity']['1.0']:.3f}"),
         ("FROC sensitivity at 2 FP/exam", lambda a: f"{validation(a)['froc_sensitivity']['2.0']:.3f}"),
+        ("FROC sensitivity at 4 FP/exam", lambda a: f"{validation(a)['froc_sensitivity']['4.0']:.3f}"),
         ("Examination-level AUC", lambda a: f"{validation(a)['exam_auc']:.3f}"),
         ("\\multicolumn{4}{l}{\\textit{Test (CT-ICH, 75 examinations)}}", None),
         ("AP@0.5 (95\\% CI)", lambda a: ci(test(a))),
@@ -329,6 +332,103 @@ def table_first_run():
     (OUT.parent / "tables" / "first_run_retinanet.tex").write_text("\n".join(lines) + "\n")
 
 
+def figure_curves():
+    """Exploratory: exam-level ROC and box-level precision-recall (IoU 0.5), validation and test.
+
+    Thin lines are the five fold models; thick lines their vertical mean (the mean of the precision curve
+    is the mean AP@0.5 reported in the text).
+    """
+    fpr = np.asarray(EXPLORATORY["roc_fpr_grid"])
+    rec = np.asarray(EXPLORATORY["recall_points"])
+    fig, axes = plt.subplots(2, 2, figsize=(6.6, 5.6), sharex="row", sharey="row")
+    for col, (setting, title) in enumerate((("validation", "Validation (BHX)"), ("test", "Test (CT-ICH)"))):
+        curves = EXPLORATORY["curves"][setting]
+        for arm in ARMS:
+            for row, (key, x) in enumerate((("roc_exam", fpr), ("pr_iou50", rec))):
+                ax = axes[row, col]
+                ys = np.asarray(curves[arm][key])
+                for y in ys:
+                    ax.plot(x, y, color=COLOR[arm], lw=0.5, alpha=0.3, drawstyle="steps-post" if row == 0 else "default")
+                metric = "exam_auc" if row == 0 else "ap50"
+                value = EXPLORATORY[setting]["arms"][arm][metric]["value"]
+                ax.plot(x, ys.mean(axis=0), color=COLOR[arm], lw=1.6,
+                        label=f"{NAME[arm]} ({'AUC' if row == 0 else 'AP'} {value:.3f})")
+        axes[0, col].plot([0, 1], [0, 1], color=GREY, lw=0.8, ls=(0, (3, 3)))
+        axes[0, col].set_title(title, loc="left", color=INK)
+        axes[0, col].set_xlabel("1 − specificity (examinations)")
+        axes[1, col].set_xlabel("Recall (boxes, IoU ≥ 0.5)")
+        for row in (0, 1):
+            axes[row, col].legend(frameon=False, loc="lower right" if row == 0 else "upper right", fontsize=7)
+    axes[0, 0].set_ylabel("Sensitivity (examinations)")
+    axes[1, 0].set_ylabel("Precision (boxes)")
+    for ax in axes.flat:
+        ax.set_xlim(0, 1)
+        ax.set_ylim(0, 1.02)
+    fig.tight_layout()
+    fig.savefig(OUT / "exploratory_curves.pdf")
+    plt.close(fig)
+
+
+def figure_loss():
+    """Exploratory: training loss per epoch of every fold model (losses differ between detectors)."""
+    labels = {"retinanet": "focal + smooth L1", "yolo_no_mosaic": "box + cls + DFL", "yolo_mosaic": "box + cls + DFL"}
+    fig, axes = plt.subplots(1, 3, figsize=(6.6, 2.4))
+    for ax, arm in zip(axes, ARMS):
+        for fold, h in EXPLORATORY["training_loss"][arm].items():
+            ax.plot(h["epoch"], h["loss"], color=COLOR[arm], lw=0.9, alpha=0.75)
+        if arm == "yolo_mosaic":
+            ax.axvspan(40.5, 50, color=GREY, alpha=0.15, lw=0)
+        ax.set_title(NAME[arm], loc="left", color=INK, fontsize=8.5)
+        ax.set_xlabel("Epoch")
+        ax.set_ylabel(f"Training loss ({labels[arm]})", fontsize=7.5)
+        ax.set_xlim(1, 50)
+        ax.set_ylim(bottom=0)
+    fig.tight_layout()
+    fig.savefig(OUT / "exploratory_loss.pdf")
+    plt.close(fig)
+
+
+def table_exploratory():
+    """Supplementary table: exploratory endpoints with 95% CIs, and the paired difference RetinaNet − YOLOv8m."""
+    names = [("ap50", "AP@0.5 (primary, for reference)"), ("ap75", "AP@0.75"), ("map50_95", "mAP@0.5:0.95"),
+             ("exam_auc", "Examination-level AUC"), ("precision_1fp", "Box precision at 1 FP/exam"),
+             ("recall_1fp", "Box recall at 1 FP/exam"), ("f1_1fp", "Box F1 at 1 FP/exam"),
+             ("exam_sensitivity_1fp", "Examination sensitivity at 1 FP/exam"),
+             ("exam_specificity_1fp", "Examination specificity at 1 FP/exam")]
+
+    def cell(m, signed=False):
+        if signed:
+            return f"{m['value']:+.3f} ({m['ci95'][0]:+.3f} to {m['ci95'][1]:+.3f})"
+        return f"{m['value']:.3f} ({m['ci95'][0]:.3f}--{m['ci95'][1]:.3f})"
+
+    rows = []
+    for setting, title in (("validation", "Cross-validation (CQ500/BHX, 436 examinations)"),
+                           ("test", "Test (CT-ICH, 75 examinations)")):
+        r = EXPLORATORY[setting]
+        rows.append(f"\\multicolumn{{5}}{{l}}{{\\textit{{{title}}}}} \\\\")
+        for key, label in names:
+            rows.append(f"{label} & " + " & ".join(cell(r["arms"][a][key]) for a in ARMS) + " & "
+                        + cell(r["differences"]["retinanet_minus_yolo_no_mosaic"][key], True) + " \\\\")
+        sizes = EXPLORATORY["size_sensitivity"][setting]
+        for size, rule in (("small", "$<32^2$"), ("medium", "$32^2$--$96^2$"), ("large", "$\\geq 96^2$")):
+            rows.append(f"Recall at 1 FP/exam, {size} boxes ({rule} px) & " + " & ".join(
+                f"{sizes[a][size]['sensitivity']:.3f} ({sizes[a][size]['detected']}/{sizes[a][size]['boxes']})"
+                for a in ARMS) + " & -- \\\\")
+    lines = ["% Generated by tools/make_figures.py from the result files; do not edit by hand.",
+             "\\begin{table}[ht]", "\\centering",
+             "\\caption{Exploratory endpoints, added after the registered analysis. Means over the five fold models "
+             "with 95\\% percentile bootstrap intervals over examinations (10,000 paired resamples); the last "
+             "column is the paired difference RetinaNet $-$ YOLOv8m without mosaic. Each fold model uses its own "
+             "operating point of one false positive (FP) per examination. Box sizes follow the COCO area ranges "
+             "on the $512 \\times 512$ input (32~px $\\approx$ 15.6~mm); size counts are summed over the five fold models, so that on CT-ICH each of the 397 reference boxes is counted once per model.}",
+             "\\label{tab:exploratory}", "\\scriptsize", "\\setlength{\\tabcolsep}{3pt}",
+             "\\begin{tabular}{@{}p{0.25\\textwidth}cccc@{}}", "\\toprule",
+             " & RetinaNet & YOLOv8m & YOLOv8m & Difference \\\\",
+             " & (A) & no mosaic (B) & mosaic (C) & A $-$ B \\\\", "\\midrule", *rows,
+             "\\bottomrule", "\\end{tabular}", "\\end{table}"]
+    (OUT.parent / "tables" / "exploratory_endpoints.tex").write_text("\n".join(lines) + "\n")
+
+
 if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
     figure_performance()
@@ -338,4 +438,7 @@ if __name__ == "__main__":
     figure_flow()
     table_summary()
     table_first_run()
+    figure_curves()
+    figure_loss()
+    table_exploratory()
     print("figures written to", OUT)

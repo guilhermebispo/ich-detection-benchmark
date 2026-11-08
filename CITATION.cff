@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this software, please cite the article below."
-title: "ich-detection-benchmark: RetinaNet versus YOLO for intracranial haemorrhage detection on head CT"
+title: "ich-detection-benchmark: RetinaNet versus YOLOv8m for intracranial haemorrhage detection on head CT"
 type: software
 license: AGPL-3.0-only
 repository-code: "https://github.com/guilhermebispo/ich-detection-benchmark"
@@ -20,7 +20,7 @@ keywords:
 preferred-citation:
   type: article
   status: in-preparation
-  title: "RetinaNet versus YOLO for intracranial haemorrhage detection on head CT: a pre-registered equivalence study with cross-dataset testing"
+  title: "RetinaNet versus YOLOv8m for intracranial haemorrhage detection on head CT: a pre-registered equivalence study with cross-dataset testing"
   authors:
     - family-names: Bispo
       given-names: Guilherme Dantas

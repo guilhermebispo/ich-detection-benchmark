@@ -1,7 +1,7 @@
-# RetinaNet versus YOLO for intracranial haemorrhage detection on head CT
+# RetinaNet versus YOLOv8m for intracranial haemorrhage detection on head CT
 
 Code, notebooks and derived data for a pre-registered, controlled comparison of RetinaNet (MONAI) and
-YOLOv8 (Ultralytics) for the localisation of intracranial haemorrhage on non-contrast head CT. Both
+YOLOv8m (Ultralytics) for the localisation of intracranial haemorrhage on non-contrast head CT. Both
 detectors read the same images, with the same patient-level folds, training budget, optimiser and
 augmentation, and are scored by a single evaluator. Training and validation use CQ500 with the BHX boxes
 (five-fold cross-validation by patient); testing uses CT-ICH, an independent dataset from another country.
@@ -17,12 +17,12 @@ download of the datasets to the figures of the article, is in this repository.
 
 | Path | Content |
 |---|---|
-| `src/ichdet/` | Python package: a single evaluator for both detectors (`metrics.py`, `stats.py`, `evaluate.py`), training and prediction (`retinanet.py`, `yolo.py`), shared settings (`training_config.py`), the job runner of the experiment (`experiment.py`), the pilot summary (`pilot.py`) and the remaining pre-specified analyses (`final.py`) |
+| `src/ichdet/` | Python package: a single evaluator for both detectors (`metrics.py`, `stats.py`, `evaluate.py`), training and prediction (`retinanet.py`, `yolo.py`), shared settings (`training_config.py`), the job runner of the experiment (`experiment.py`), the pilot summary (`pilot.py`), the remaining pre-specified analyses (`final.py`) and the exploratory endpoints added after the registered analysis (`exploratory.py`) |
 | `tests/` | Automated tests (`pytest`), including cross-checks against pycocotools and tests of the RetinaNet box axes |
-| `notebooks/` | The eleven Google Colab notebooks that ran the study, in order (see [Pipeline](#pipeline)) |
+| `notebooks/` | The twelve Google Colab notebooks that ran the study, in order (see [Pipeline](#pipeline)) |
 | `data/` | Derived data: cohort and series selection, the five folds, the BHX reference boxes used, counts, training records and the aggregated results (see [Derived data](#derived-data)) |
 | `docs/` | The registered statistical analysis plan (`statistical_protocol.md`) and its amendment (`osf_amendment_v1.2.md`) |
-| `tools/make_figures.py` | Draws the result figures and the summary table of the article from the files in `data/` |
+| `tools/make_figures.py` | Draws the result figures and the tables of the article and its supplementary material from the files in `data/` |
 
 ## Pipeline
 
@@ -42,6 +42,7 @@ run in this order:
 | `09_avaliacao_correcao` | Evaluation of the corrected RetinaNet against the YOLO predictions of the first run | GPU |
 | `10_figura_exemplos` | Figure of qualitative examples, chosen by a rule fixed before looking at the images | CPU |
 | `11_figura_preprocessamento` | Preprocessing figure of the article (same slice and geometry as notebook 04, without titles) | CPU |
+| `12_metricas_exploratorias` | Exploratory endpoints from the stored predictions (AP@0.75, ROC and precision-recall curves, metrics at one false positive per examination, recall by box size, training loss); nothing is trained or predicted | CPU |
 
 To run them, copy `src/ichdet` to `MyDrive/ich-benchmark/codigo/ichdet/` on your Drive. The notebooks
 create the data folders under `MyDrive/ich-benchmark/dados/`. Long jobs resume from the last saved epoch
@@ -63,7 +64,7 @@ prediction). Their fingerprint, `ichdet.experiment.frozen_fingerprint`, proves w
 | Version | Fingerprint | Used by | In this repository |
 |---|---|---|---|
 | Protocol v1.1 (registered plan) | `c3752d247a0173f1` | Notebooks 05 to 07 (first run) | Commit `1f61311` |
-| Protocol v1.2 (amendment) | `a6f3c0fc5798879d` | Notebooks 08 to 10 | Current version (`ichdet` 0.4.0) |
+| Protocol v1.2 (amendment) | `a6f3c0fc5798879d` | Notebooks 08 to 12 | Current version (`ichdet` 0.5.0; 0.5.0 only adds the non-frozen `exploratory.py`) |
 
 After the first run had been evaluated, the RetinaNet arm turned out to have been trained with transposed
 boxes: MONAI reads box coordinate *i* along spatial axis *i* of the image tensor (rows first), whereas the
@@ -95,14 +96,14 @@ repository removed; the registered version on OSF is authoritative.
 | `data/pilot_summary.json` | Pilot experiment |
 | `data/training_status.json`, `data/sessions.jsonl` | Training jobs and Colab sessions of the first run |
 | `data/final_results.json`, `data/results_validation.json`, `data/results_test.json` | Results of the first run (RetinaNet with transposed boxes; the YOLO results are the final ones) |
-| `data/correcao_retinanet/` | Training records and final results with the corrected RetinaNet, and the selection of the qualitative examples |
+| `data/correcao_retinanet/` | Training records and final results with the corrected RetinaNet, the selection of the qualitative examples and the exploratory endpoints (`exploratory_results.json`, not part of the registered plan) |
 
 Column names and some values are in Portuguese, as written by the notebooks: `exame` (examination), `parte`
 (fold), `grupo` (group: `com sangramento` = with haemorrhage, `normal`, `duvidoso` = equivocal), `tipo` /
 `tipos` (subtype), `votos_ich` (number of CQ500 readers reporting haemorrhage), `corte` (slice), `arquivo`
 (file). In the result files, arm A is RetinaNet, B is YOLOv8m without mosaic and C is YOLOv8m with mosaic.
 
-To draw the figures and the summary table of the article again, run:
+To draw the figures and the tables of the article again, run:
 
 ```bash
 .venv/bin/python tools/make_figures.py data out
