@@ -191,7 +191,7 @@ See [`DATA_LICENSES.md`](DATA_LICENSES.md) for the references and licence notice
 @unpublished{bispo2026ichdetection,
   title  = {RetinaNet versus {YOLO} for intracranial haemorrhage detection on head {CT}:
             a pre-registered equivalence study with cross-dataset testing},
-  author = {Bispo, Guilherme Dantas and Serrano, Andr{\'e} Luiz Marques and Gon{\c{c}}alves, Vin{\'i}cius Pereira},
+  author = {Bispo, Guilherme Dantas and Serrano, Andr{\'e} Luiz Marques and Rocha Filho, Geraldo Pereira and Gon{\c{c}}alves, Vin{\'i}cius Pereira},
   note   = {Manuscript in preparation},
   year   = {2026}
 }
