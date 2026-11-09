@@ -420,7 +420,7 @@ def table_exploratory():
              "with 95\\% percentile bootstrap intervals over examinations (10,000 paired resamples); the last "
              "column is the paired difference RetinaNet $-$ YOLOv8m without mosaic. Each fold model uses its own "
              "operating point of one false positive (FP) per examination. Box sizes follow the COCO area ranges "
-             "on the $512 \\times 512$ input (32~px $\\approx$ 15.6~mm); size counts are summed over the five fold models, so that on CT-ICH each of the 397 reference boxes is counted once per model.}",
+             "on the $512 \\times 512$ input (32~px $\\approx$ 15.6~mm); size counts are summed over the five fold models, so that on CT-ICH each of the 397 reference boxes is counted once per model. The bootstrap draws differ from those of Table~4 of the main text, so AP@0.5 intervals can differ in the third decimal place.}",
              "\\label{tab:exploratory}", "\\scriptsize", "\\setlength{\\tabcolsep}{3pt}",
              "\\begin{tabular}{@{}p{0.25\\textwidth}cccc@{}}", "\\toprule",
              " & RetinaNet & YOLOv8m & YOLOv8m & Difference \\\\",
