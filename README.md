@@ -10,7 +10,7 @@ augmentation, and are scored by a single evaluator. Training and validation use 
 > [`CITATION.cff`](CITATION.cff); GitHub's *Cite this repository* button gives the reference).
 
 **Status.** The article is in preparation. The analysis plan was frozen and registered on OSF Registries
-before the full experiment (registration under embargo until submission). The full pipeline, from the
+before the full experiment ([doi:10.17605/OSF.IO/YU48S](https://doi.org/10.17605/OSF.IO/YU48S)). The full pipeline, from the
 download of the datasets to the figures of the article, is in this repository.
 
 ## Layout
