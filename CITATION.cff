@@ -3,6 +3,14 @@ message: "If you use this software, please cite the article below."
 title: "ich-detection-benchmark: RetinaNet versus YOLOv8m for intracranial haemorrhage detection on head CT"
 type: software
 license: AGPL-3.0-only
+doi: 10.5281/zenodo.24370356
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.24370356
+    description: "Zenodo archive, all versions"
+  - type: doi
+    value: 10.5281/zenodo.24370357
+    description: "Zenodo archive, version v1.0.0 (used in the article)"
 repository-code: "https://github.com/guilhermebispo/ich-detection-benchmark"
 authors:
   - family-names: Bispo

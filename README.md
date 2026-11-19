@@ -11,7 +11,9 @@ augmentation, and are scored by a single evaluator. Training and validation use 
 
 **Status.** The article is in preparation. The analysis plan was frozen and registered on OSF Registries
 before the full experiment ([doi:10.17605/OSF.IO/YU48S](https://doi.org/10.17605/OSF.IO/YU48S)). The full pipeline, from the
-download of the datasets to the figures of the article, is in this repository.
+download of the datasets to the figures of the article, is in this repository. The version used in the article
+is archived on Zenodo: v1.0.0, [doi:10.5281/zenodo.24370357](https://doi.org/10.5281/zenodo.24370357) (all
+versions: [doi:10.5281/zenodo.24370356](https://doi.org/10.5281/zenodo.24370356)).
 
 ## Layout
 
@@ -189,11 +191,25 @@ See [`DATA_LICENSES.md`](DATA_LICENSES.md) for the references and licence notice
 
 ```bibtex
 @unpublished{bispo2026ichdetection,
-  title  = {RetinaNet versus {YOLO} for intracranial haemorrhage detection on head {CT}:
+  title  = {RetinaNet versus {YOLOv8m} for intracranial haemorrhage detection on head {CT}:
             a pre-registered equivalence study with cross-dataset testing},
   author = {Bispo, Guilherme Dantas and Serrano, Andr{\'e} Luiz Marques and Rocha Filho, Geraldo Pereira and Gon{\c{c}}alves, Vin{\'i}cius Pereira},
   note   = {Manuscript in preparation},
   year   = {2026}
+}
+```
+
+The code itself (version used in the article):
+
+```bibtex
+@software{bispo2026ichdetectioncode,
+  author    = {Bispo, Guilherme Dantas},
+  title     = {ich-detection-benchmark: {RetinaNet} versus {YOLOv8m} for intracranial haemorrhage
+               detection on head {CT}},
+  version   = {v1.0.0},
+  year      = {2026},
+  publisher = {Zenodo},
+  doi       = {10.5281/zenodo.24370357}
 }
 ```
 
