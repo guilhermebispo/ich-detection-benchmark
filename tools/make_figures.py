@@ -429,6 +429,66 @@ def table_exploratory():
     (OUT.parent / "tables" / "exploratory_endpoints.tex").write_text("\n".join(lines) + "\n")
 
 
+def figure_graphical_abstract():
+    """Graphical abstract (journal format: landscape, at least 1328 px wide, readable at 13 cm)."""
+    eq = CORRECTED["validation"]["primary_A_vs_B"]["equivalence_A_minus_B"]
+    mosaic_val = CORRECTED["validation"]["mosaic_C_vs_B"]["equivalence_A_minus_B"]["difference"]
+    mosaic_test = CORRECTED["test"]["C_vs_B"]["equivalence_A_minus_B"]["difference"]
+    drops = [validation(a)["ap50"] - test(a)["ap50"] for a in ARMS]
+    folds = json.loads((DATA / "export_512_summary.json").read_text())["cq500_folds_main_analysis"]
+    n_val = sum(f["exams"] for f in folds.values())
+    n_test = json.loads((DATA / "ctich_contagens.json").read_text())["exames"]
+
+    fig = plt.figure(figsize=(13 / 2.54, 5.6 / 2.54))
+    fs = 6.6
+    # Left: design
+    left = fig.add_axes([0.0, 0.0, 0.31, 1.0]); left.axis("off")
+    left.text(0.02, 0.95, "Matched, pre-registered design", fontsize=fs + 0.8, weight="bold", color=INK, va="top")
+    box = dict(boxstyle="round,pad=0.35", fc="#f3f2ee", ec="#d6d4cd", lw=0.6)
+    left.text(0.02, 0.83, f"CQ500 + BHX boxes\n{n_val} examinations, 5-fold CV", fontsize=fs, va="top", bbox=box)
+    ys = [0.615, 0.515, 0.415]
+    for arm, y in zip(ARMS, ys):
+        left.text(0.06, y, NAME[arm], fontsize=fs, va="center", color="white", weight="bold",
+                  bbox=dict(boxstyle="round,pad=0.3", fc=COLOR[arm], ec="none"))
+    left.text(0.06, 0.33, "same input, folds, schedule,\naugmentation and evaluator", fontsize=fs - 0.8,
+              va="center", color=MUTED, style="italic", linespacing=1.1)
+    left.text(0.02, 0.215, f"CT-ICH, another country\n{n_test} examinations, tested once", fontsize=fs, va="top",
+              bbox=box)
+    # Middle: AP@0.5
+    ax = fig.add_axes([0.385, 0.20, 0.25, 0.66])
+    offsets = {"retinanet": -0.07, "yolo_no_mosaic": 0.0, "yolo_mosaic": 0.07}
+    for arm in ARMS:
+        pts = [validation(arm), test(arm)]
+        x = np.array([0, 1]) + offsets[arm]
+        ax.plot(x, [p["ap50"] for p in pts], color=COLOR[arm], lw=1.2)
+        for xi, p in zip(x, pts):
+            ax.errorbar(xi, p["ap50"], yerr=[[p["ap50"] - p["ci95"][0]], [p["ci95"][1] - p["ap50"]]],
+                        fmt=MARKER[arm], ms=4, color=COLOR[arm], mec="white", mew=0.6, elinewidth=1.0, capsize=0)
+    ax.set_xticks([0, 1], ["Cross-\nvalidation", "CT-ICH\ntest"], fontsize=fs)
+    ax.set_xlim(-0.35, 1.35); ax.set_ylim(0, 0.55)
+    ax.set_yticks([0, 0.1, 0.2, 0.3, 0.4, 0.5]); ax.tick_params(labelsize=fs - 0.4, length=2)
+    ax.set_title("AP@0.5 (95% CI)", fontsize=fs + 0.4, color=INK, pad=4)
+    # Right: findings
+    right = fig.add_axes([0.67, 0.0, 0.33, 1.0]); right.axis("off")
+    right.text(0.0, 0.95, "Findings", fontsize=fs + 0.8, weight="bold", color=INK, va="top")
+    items = [
+        f"YOLOv8m led RetinaNet by {-eq['difference']:.3f}\n(90% CI {-eq['ci90'][1]:.3f} to {-eq['ci90'][0]:.3f}):\n"
+        f"not equivalent, at the \u00b1{MARGIN:.2f} margin",
+        f"Mosaic added {mosaic_val:.3f} in CV\nbut only {mosaic_test:.3f} on CT-ICH",
+        f"Every arm lost {min(drops):.2f}\u2013{max(drops):.2f} on data from\nanother country, more than the\n"
+        "difference between detectors",
+    ]
+    y = 0.80
+    for i, text in enumerate(items, 1):
+        right.text(0.0, y, f"{i}", fontsize=fs + 1.5, weight="bold", color=COLOR["yolo_no_mosaic"], va="top")
+        right.text(0.09, y, text, fontsize=fs, va="top", color=INK, linespacing=1.2)
+        y -= 0.27
+    OUT.mkdir(parents=True, exist_ok=True)
+    fig.savefig(OUT / "graphical_abstract.pdf", bbox_inches=None)
+    _savefig(fig, OUT / "graphical_abstract.tiff", dpi=600, bbox_inches=None, pil_kwargs={"compression": "tiff_lzw"})
+    plt.close(fig)
+
+
 if __name__ == "__main__":
     OUT.mkdir(parents=True, exist_ok=True)
     figure_performance()
@@ -441,4 +501,5 @@ if __name__ == "__main__":
     figure_curves()
     figure_loss()
     table_exploratory()
+    figure_graphical_abstract()
     print("figures written to", OUT)
