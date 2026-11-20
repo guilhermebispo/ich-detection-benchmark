@@ -6,4 +6,4 @@ computes its metrics. The statistical analysis plan that this code implements wa
 registered on OSF Registries before the full experiment.
 """
 
-__version__ = "0.5.0"
+__version__ = "0.6.0"

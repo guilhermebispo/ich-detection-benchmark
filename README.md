@@ -21,7 +21,7 @@ versions: [doi:10.5281/zenodo.24370356](https://doi.org/10.5281/zenodo.24370356)
 |---|---|
 | `src/ichdet/` | Python package: a single evaluator for both detectors (`metrics.py`, `stats.py`, `evaluate.py`), training and prediction (`retinanet.py`, `yolo.py`), shared settings (`training_config.py`), the job runner of the experiment (`experiment.py`), the pilot summary (`pilot.py`), the remaining pre-specified analyses (`final.py`) and the exploratory endpoints added after the registered analysis (`exploratory.py`) |
 | `tests/` | Automated tests (`pytest`), including cross-checks against pycocotools and tests of the RetinaNet box axes |
-| `notebooks/` | The twelve Google Colab notebooks that ran the study, in order (see [Pipeline](#pipeline)) |
+| `notebooks/` | The fourteen Google Colab notebooks that ran the study, in order (see [Pipeline](#pipeline)) |
 | `data/` | Derived data: cohort and series selection, the five folds, the BHX reference boxes used, counts, training records and the aggregated results (see [Derived data](#derived-data)) |
 | `docs/` | The registered statistical analysis plan (`statistical_protocol.md`) and its amendment (`osf_amendment_v1.2.md`) |
 | `tools/make_figures.py` | Draws the result figures and the tables of the article and its supplementary material from the files in `data/` |
@@ -45,6 +45,8 @@ run in this order:
 | `10_figura_exemplos` | Figure of qualitative examples, chosen by a rule fixed before looking at the images | CPU |
 | `11_figura_preprocessamento` | Preprocessing figure of the article (same slice and geometry as notebook 04, without titles) | CPU |
 | `12_metricas_exploratorias` | Exploratory endpoints from the stored predictions (AP@0.75, ROC and precision-recall curves, metrics at one false positive per examination, recall by box size, training loss); nothing is trained or predicted | CPU |
+| `13_anotacao_ctich` | Sensitivity of the test-set results to the annotation protocol of CT-ICH: the stored predictions re-scored against reference boxes merged per slice, merged by proximity, or without the small boxes; nothing is trained or predicted | CPU |
+| `14_tempo_cpu` | CPU inference time of the three arms measured again in one session with the same number of PyTorch threads | CPU |
 
 To run them, copy `src/ichdet` to `MyDrive/ich-benchmark/codigo/ichdet/` on your Drive. The notebooks
 create the data folders under `MyDrive/ich-benchmark/dados/`. Long jobs resume from the last saved epoch
@@ -66,7 +68,7 @@ prediction). Their fingerprint, `ichdet.experiment.frozen_fingerprint`, proves w
 | Version | Fingerprint | Used by | In this repository |
 |---|---|---|---|
 | Protocol v1.1 (registered plan) | `c3752d247a0173f1` | Notebooks 05 to 07 (first run) | Commit `1f61311` |
-| Protocol v1.2 (amendment) | `a6f3c0fc5798879d` | Notebooks 08 to 12 | Current version (`ichdet` 0.5.0; 0.5.0 only adds the non-frozen `exploratory.py`) |
+| Protocol v1.2 (amendment) | `a6f3c0fc5798879d` | Notebooks 08 to 14 | Current version (`ichdet` 0.6.0; 0.5.0 and 0.6.0 only add and extend the non-frozen `exploratory.py`) |
 
 After the first run had been evaluated, the RetinaNet arm turned out to have been trained with transposed
 boxes: MONAI reads box coordinate *i* along spatial axis *i* of the image tensor (rows first), whereas the
@@ -191,7 +193,7 @@ See [`DATA_LICENSES.md`](DATA_LICENSES.md) for the references and licence notice
 
 ```bibtex
 @unpublished{bispo2026ichdetection,
-  title  = {RetinaNet versus {YOLOv8m} for intracranial haemorrhage detection on head {CT}:
+  title  = {Reference implementations of {RetinaNet} and {YOLOv8m} for intracranial haemorrhage detection on head {CT}:
             a pre-registered equivalence study with cross-dataset testing},
   author = {Bispo, Guilherme Dantas and Serrano, Andr{\'e} Luiz Marques and Rocha Filho, Geraldo Pereira and Gon{\c{c}}alves, Vin{\'i}cius Pereira},
   note   = {Manuscript in preparation},

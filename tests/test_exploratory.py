@@ -111,3 +111,24 @@ def test_loss_history_reads_both_logs(tmp_path):
         "epoch,time,train/box_loss,train/cls_loss,train/dfl_loss\n1,10,1.0,2.0,0.5\n2,20,0.8,1.5,0.4\n")
     h = ex.loss_history(tmp_path / "y", "yolo_no_mosaic")
     assert h["epoch"] == [1, 2] and h["loss"] == pytest.approx([3.5, 2.7])
+
+
+def test_merge_reference_boxes_joins_a_slice_or_nearby_boxes():
+    gt = {"s1": ("e1", np.array([[0, 0, 10, 10], [12, 0, 20, 10], [100, 100, 110, 110]], float)),
+          "s2": ("e1", np.array([[5, 5, 9, 9]], float)), "s3": ("e2", np.zeros((0, 4)))}
+    whole = ex.merge_reference_boxes(gt)
+    assert whole["s1"][1].tolist() == [[0, 0, 110, 110]]
+    assert whole["s2"][1].tolist() == [[5, 5, 9, 9]] and whole["s3"][1].shape == (0, 4)
+    near = ex.merge_reference_boxes(gt, gap=2)
+    assert sorted(near["s1"][1].tolist()) == [[0, 0, 20, 10], [100, 100, 110, 110]]
+    assert ex.merge_reference_boxes(gt, gap=0.5)["s1"][1].shape == (3, 4)
+
+
+def test_ignore_small_references_drops_small_boxes_and_their_detections():
+    gt = {"s1": ("e1", np.array([[0, 0, 20, 20], [100, 100, 200, 200]], float)), "s2": ("e1", np.zeros((0, 4)))}
+    pred = {"s1": (np.array([[1, 1, 20, 20], [100, 100, 200, 200], [300, 300, 310, 310]], float), np.array([.9, .8, .7])),
+            "s2": (np.array([[0, 0, 5, 5]], float), np.array([.5]))}
+    g, p = ex.ignore_small_references(gt, pred)
+    assert g["s1"][1].tolist() == [[100, 100, 200, 200]]
+    assert p["s1"][0].tolist() == [[100, 100, 200, 200], [300, 300, 310, 310]] and p["s1"][1].tolist() == [.8, .7]
+    assert p["s2"][0].tolist() == [[0, 0, 5, 5]]

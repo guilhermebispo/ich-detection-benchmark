@@ -215,3 +215,86 @@ def loss_history(directory, arm: str) -> dict:
 
 def build_tables(ground_truth_list, predictions_list) -> list[DetectionTable]:
     return [DetectionTable.build(g, p, COCO_IOU_THRESHOLDS) for g, p in zip(ground_truth_list, predictions_list)]
+
+
+def _pairwise_iou(a, b) -> np.ndarray:
+    """IoU between every box of `a` (N, 4) and every box of `b` (M, 4), [x1, y1, x2, y2]."""
+    a, b = np.asarray(a, float).reshape(-1, 4), np.asarray(b, float).reshape(-1, 4)
+    x1 = np.maximum(a[:, None, 0], b[None, :, 0])
+    y1 = np.maximum(a[:, None, 1], b[None, :, 1])
+    x2 = np.minimum(a[:, None, 2], b[None, :, 2])
+    y2 = np.minimum(a[:, None, 3], b[None, :, 3])
+    inter = np.clip(x2 - x1, 0, None) * np.clip(y2 - y1, 0, None)
+    area_a = (a[:, 2] - a[:, 0]) * (a[:, 3] - a[:, 1])
+    area_b = (b[:, 2] - b[:, 0]) * (b[:, 3] - b[:, 1])
+    union = area_a[:, None] + area_b[None, :] - inter
+    return np.where(union > 0, inter / np.where(union > 0, union, 1), 0.0)
+
+
+def merge_reference_boxes(ground_truth: dict, gap: float | None = None) -> dict:
+    """Reference boxes of each slice merged into enclosing boxes (sensitivity to the annotation protocol).
+
+    Args:
+        ground_truth: {image: (exam, boxes (M, 4))}.
+        gap: None merges all the boxes of a slice into one box. A number merges the boxes whose rectangles,
+            enlarged by `gap` pixels on each side, overlap (directly or through other boxes).
+
+    Returns:
+        A new {image: (exam, boxes)} with the merged boxes; slices with one box or none are unchanged.
+    """
+    out = {}
+    for image, (exam, boxes) in ground_truth.items():
+        b = np.asarray(boxes, dtype=float).reshape(-1, 4)
+        if len(b) <= 1:
+            out[image] = (exam, b.copy())
+            continue
+        if gap is None:
+            groups = [list(range(len(b)))]
+        else:
+            parent = list(range(len(b)))
+
+            def find(i):
+                while parent[i] != i:
+                    parent[i] = parent[parent[i]]
+                    i = parent[i]
+                return i
+
+            e = b + np.array([-gap, -gap, gap, gap])
+            for i in range(len(b)):
+                for j in range(i + 1, len(b)):
+                    if e[i, 0] <= e[j, 2] and e[j, 0] <= e[i, 2] and e[i, 1] <= e[j, 3] and e[j, 1] <= e[i, 3]:
+                        parent[find(i)] = find(j)
+            by_root = {}
+            for i in range(len(b)):
+                by_root.setdefault(find(i), []).append(i)
+            groups = list(by_root.values())
+        out[image] = (exam, np.array([[b[g, 0].min(), b[g, 1].min(), b[g, 2].max(), b[g, 3].max()] for g in groups]))
+    return out
+
+
+def ignore_small_references(ground_truth: dict, predictions: dict, iou: float = 0.5) -> tuple[dict, dict]:
+    """Small reference boxes (COCO area below 32 x 32 px) left out, together with the detections that match them.
+
+    As in a COCO evaluation restricted to an area range, a small reference box is neither a hit nor a miss,
+    and a detection that overlaps it with IoU >= `iou` is neither a true nor a false positive.
+
+    Args:
+        ground_truth: {image: (exam, boxes (M, 4))}.
+        predictions: {image: (boxes (N, 4), scores (N,))}.
+        iou: IoU above which a detection is taken as matching a small reference box.
+
+    Returns:
+        (ground truth without the small boxes, predictions without the detections that match them).
+    """
+    gt_out, pred_out = {}, dict(predictions)
+    for image, (exam, boxes) in ground_truth.items():
+        b = np.asarray(boxes, dtype=float).reshape(-1, 4)
+        small = np.array([size_bin(x) == "small" for x in b], dtype=bool)
+        gt_out[image] = (exam, b[~small])
+        if small.any() and image in predictions:
+            pb, ps = predictions[image]
+            pb, ps = np.asarray(pb, dtype=float).reshape(-1, 4), np.asarray(ps, dtype=float).reshape(-1)
+            if len(pb):
+                keep = _pairwise_iou(pb, b[small]).max(axis=1) < iou
+                pred_out[image] = (pb[keep], ps[keep])
+    return gt_out, pred_out

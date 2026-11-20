@@ -28,7 +28,7 @@ keywords:
 preferred-citation:
   type: article
   status: in-preparation
-  title: "RetinaNet versus YOLOv8m for intracranial haemorrhage detection on head CT: a pre-registered equivalence study with cross-dataset testing"
+  title: "Reference implementations of RetinaNet and YOLOv8m for intracranial haemorrhage detection on head CT: a pre-registered equivalence study with cross-dataset testing"
   authors:
     - family-names: Bispo
       given-names: Guilherme Dantas
