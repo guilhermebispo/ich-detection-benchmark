@@ -100,7 +100,7 @@ repository removed; the registered version on OSF is authoritative.
 | `data/pilot_summary.json` | Pilot experiment |
 | `data/training_status.json`, `data/sessions.jsonl` | Training jobs and Colab sessions of the first run |
 | `data/final_results.json`, `data/results_validation.json`, `data/results_test.json` | Results of the first run (RetinaNet with transposed boxes; the YOLO results are the final ones) |
-| `data/correcao_retinanet/` | Training records and final results with the corrected RetinaNet, the selection of the qualitative examples and the exploratory endpoints (`exploratory_results.json`, not part of the registered plan) |
+| `data/correcao_retinanet/` | Training records and final results with the corrected RetinaNet, the selection of the qualitative examples and the exploratory endpoints (`exploratory_results.json`, not part of the registered plan); `exploratorio/` holds the outputs of notebooks 13 (`annotation_sensitivity.json`) and 14 (`cpu_latency_same_session.json`), also exploratory |
 
 Column names and some values are in Portuguese, as written by the notebooks: `exame` (examination), `parte`
 (fold), `grupo` (group: `com sangramento` = with haemorrhage, `normal`, `duvidoso` = equivocal), `tipo` /

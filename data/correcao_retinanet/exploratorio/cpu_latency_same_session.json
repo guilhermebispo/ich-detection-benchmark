@@ -1,0 +1,128 @@
+{
+ "note": "CPU inference time of the three arms in one session with the same number of PyTorch threads (co-author comment of 20 Nov 2026); fold-1 models, 100 CT-ICH slices, one at a time.",
+ "computed": "2026-11-25 03:54:45",
+ "environment": {
+  "ichdet_version": "0.6.0",
+  "python": "3.13.18",
+  "torch": "2.14.1+cpu",
+  "monai": "1.5.2",
+  "ultralytics": "8.3.253",
+  "cpu": "x86_64",
+  "cpu_count": 2,
+  "torch_threads": 2,
+  "omp_num_threads": "2",
+  "ultralytics_num_threads": 2,
+  "started": "2026-11-25 03:15:34"
+ },
+ "round_orders": [
+  [
+   "retinanet",
+   "yolo_no_mosaic",
+   "yolo_mosaic"
+  ],
+  [
+   "yolo_no_mosaic",
+   "yolo_mosaic",
+   "retinanet"
+  ],
+  [
+   "yolo_mosaic",
+   "retinanet",
+   "yolo_no_mosaic"
+  ]
+ ],
+ "rounds": [
+  {
+   "retinanet": {
+    "median_seconds_per_slice": 4.8059926109999935,
+    "p90_seconds_per_slice": 6.222238233799971,
+    "slices": 100,
+    "torch_threads": 2
+   },
+   "yolo_no_mosaic": {
+    "median_seconds_per_slice": 0.9386280439999837,
+    "p90_seconds_per_slice": 2.0834865588000526,
+    "slices": 100,
+    "torch_threads": 2
+   },
+   "yolo_mosaic": {
+    "median_seconds_per_slice": 0.9714133564999088,
+    "p90_seconds_per_slice": 2.1474451154000356,
+    "slices": 100,
+    "torch_threads": 2
+   }
+  },
+  {
+   "yolo_no_mosaic": {
+    "median_seconds_per_slice": 0.9510058574999221,
+    "p90_seconds_per_slice": 2.1196832870998836,
+    "slices": 100,
+    "torch_threads": 2
+   },
+   "yolo_mosaic": {
+    "median_seconds_per_slice": 0.9398882975000333,
+    "p90_seconds_per_slice": 2.138200082499931,
+    "slices": 100,
+    "torch_threads": 2
+   },
+   "retinanet": {
+    "median_seconds_per_slice": 4.998236749500052,
+    "p90_seconds_per_slice": 5.93559007539991,
+    "slices": 100,
+    "torch_threads": 2
+   }
+  },
+  {
+   "yolo_mosaic": {
+    "median_seconds_per_slice": 0.969179707500075,
+    "p90_seconds_per_slice": 2.147633961399993,
+    "slices": 100,
+    "torch_threads": 2
+   },
+   "retinanet": {
+    "median_seconds_per_slice": 5.097063190499739,
+    "p90_seconds_per_slice": 5.814852440300092,
+    "slices": 100,
+    "torch_threads": 2
+   },
+   "yolo_no_mosaic": {
+    "median_seconds_per_slice": 0.9285402964999321,
+    "p90_seconds_per_slice": 1.9733344934998065,
+    "slices": 100,
+    "torch_threads": 2
+   }
+  }
+ ],
+ "summary": {
+  "retinanet": {
+   "median_seconds_per_slice": 4.998236749500052,
+   "rounds_median_seconds_per_slice": [
+    4.8059926109999935,
+    4.998236749500052,
+    5.097063190499739
+   ],
+   "p90_seconds_per_slice": 5.93559007539991,
+   "torch_threads": 2
+  },
+  "yolo_no_mosaic": {
+   "median_seconds_per_slice": 0.9386280439999837,
+   "rounds_median_seconds_per_slice": [
+    0.9386280439999837,
+    0.9510058574999221,
+    0.9285402964999321
+   ],
+   "p90_seconds_per_slice": 2.0834865588000526,
+   "torch_threads": 2
+  },
+  "yolo_mosaic": {
+   "median_seconds_per_slice": 0.969179707500075,
+   "rounds_median_seconds_per_slice": [
+    0.9714133564999088,
+    0.9398882975000333,
+    0.969179707500075
+   ],
+   "p90_seconds_per_slice": 2.1474451154000356,
+   "torch_threads": 2
+  }
+ }
+}
